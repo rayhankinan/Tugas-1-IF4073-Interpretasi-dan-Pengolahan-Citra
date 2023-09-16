@@ -1,8 +1,9 @@
-classdef GrayscaleImageWrapperModel < ImageWrapperModel
+classdef GrayscaleImageWrapper < wrappers.BaseImageWrapper
     methods
         % Constructor
-        function obj = GrayscaleImageWrapperModel(image)
-            obj = obj@ImageWrapperModel(image, "Grayscale");
+        function obj = GrayscaleImageWrapper(image)
+            obj.ImageData = image;
+            obj.Type = 'grayscale';
         end
         
         % Get Histogram
@@ -18,6 +19,11 @@ classdef GrayscaleImageWrapperModel < ImageWrapperModel
         % Get Histogram Specification
         function hist = getHistogramSpecification(obj, target)
             hist = histeq(obj.ImageData, target.ImageData);
+        end
+        
+        % Save Image
+        function saveImage(obj, path)
+            imwrite(obj.ImageData, path);
         end
     end
 end

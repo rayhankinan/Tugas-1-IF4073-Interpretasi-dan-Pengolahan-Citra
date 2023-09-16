@@ -1,8 +1,9 @@
-classdef ColoredImageWrapperModel < ImageWrapperModel
+classdef ColoredImageWrapper < wrappers.BaseImageWrapper
     methods
         % Constructor
-        function obj = ColoredImageWrapperModel(image)
-            obj = obj@ImageWrapperModel(image, "Colored");
+        function obj = ColoredImageWrapper(image)
+            obj.ImageData = image;
+            obj.Type = 'color';
         end
         
         % Get Histogram
@@ -18,6 +19,11 @@ classdef ColoredImageWrapperModel < ImageWrapperModel
         % Get Histogram Specification
         function hist = getHistogramSpecification(obj, target)
             hist = histeq(obj.ImageData, target.ImageData);
+        end
+        
+        % Save Image
+        function saveImage(obj, path)
+            imwrite(obj.ImageData, path);
         end
     end
 end

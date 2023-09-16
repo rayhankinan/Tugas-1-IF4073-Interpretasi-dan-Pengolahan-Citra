@@ -1,0 +1,2 @@
+classdef (Abstract) BaseModel
+end

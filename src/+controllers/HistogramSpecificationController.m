@@ -1,0 +1,2 @@
+classdef HistogramSpecificationController < controllers.BaseController
+end
