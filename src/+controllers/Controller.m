@@ -1,4 +1,4 @@
-classdef Controller < Component
+classdef Controller < components.Component
     %CONTROLLER Provides an interactive control to generate new data.
     %
     % Copyright 2021-2022 The MathWorks, Inc.
@@ -9,12 +9,12 @@ classdef Controller < Component
             % CONTROLLER Controller constructor.
             
             arguments
-                model(1, 1) Model
-                namedArgs.?Controller
+                model(1, 1) models.Model
+                namedArgs.?controllers.Controller
             end % arguments
             
             % Call the superclass constructor.
-            obj@Component( model )
+            obj@components.Component( model )
             
             % Set any user-specified properties.
             set( obj, namedArgs )

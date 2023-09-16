@@ -17,13 +17,13 @@ g = uigridlayout( ...
     "ColumnWidth", "1x" );
 
 % Create the model.
-m = Model;
+m = models.Model;
 
 % Create the view.
-View( m, "Parent", g );
+views.View( m, "Parent", g );
 
 % Create the controller.
-Controller( m, "Parent", g );
+controllers.Controller( m, "Parent", g );
 
 % Create toolbar to reset the model.
 icon = fullfile( matlabroot, ...
