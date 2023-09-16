@@ -1,2 +1,0 @@
-classdef HistogramSpecificationModel < models.BaseModel
-end
