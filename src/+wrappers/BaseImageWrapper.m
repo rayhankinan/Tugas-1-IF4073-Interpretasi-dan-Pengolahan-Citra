@@ -6,15 +6,15 @@ classdef (Abstract) BaseImageWrapper
     
     methods
         % Get Histogram
-        getHistogram(obj)
+        GetHistogram(obj)
         
         % Get Histogram Equalized
-        getHistogramEqualized(obj)
+        GetHistogramEqualized(obj)
         
         % Get Histogram Specification
-        getHistogramSpecification(obj, target)
+        GetHistogramSpecification(obj, target)
         
         % Save Image
-        saveImage(obj, path)
+        SaveImage(obj, path)
     end
 end

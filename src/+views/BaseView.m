@@ -1,9 +1,9 @@
 classdef (Abstract) BaseView
     methods
         % Display input view
-        getInput(obj)
+        GetInput(obj)
         
         % Display output view
-        setOutput(obj, display)
+        SetOutput(obj, display)
     end
 end

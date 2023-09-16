@@ -1,8 +1,6 @@
 classdef ImageWrapperFactory
     methods (Static)
-        function wrapper = create(filename)
-            imageData = imread(filename);
-            
+        function wrapper = create(imageData)
             if size(imageData, 3) == 3
                 wrapper = wrappers.ColoredImageWrapper(imageData);
             else

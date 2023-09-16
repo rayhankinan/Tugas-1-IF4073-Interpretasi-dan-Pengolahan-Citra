@@ -7,22 +7,22 @@ classdef GrayscaleImageWrapper < wrappers.BaseImageWrapper
         end
         
         % Get Histogram
-        function hist = getHistogram(obj)
+        function hist = GetHistogram(obj)
             hist = imhist(obj.ImageData);
         end
         
         % Get Histogram Equalized
-        function hist = getHistogramEqualized(obj)
+        function hist = GetHistogramEqualized(obj)
             hist = histeq(obj.ImageData);
         end
         
         % Get Histogram Specification
-        function hist = getHistogramSpecification(obj, target)
+        function hist = GetHistogramSpecification(obj, target)
             hist = histeq(obj.ImageData, target.ImageData);
         end
         
         % Save Image
-        function saveImage(obj, path)
+        function SaveImage(obj, path)
             imwrite(obj.ImageData, path);
         end
     end

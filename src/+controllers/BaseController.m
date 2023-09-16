@@ -1,11 +1,11 @@
 classdef (Abstract) BaseController
     properties
-        Model {mustBeA(Model, 'BaseModel')}
-        View {mustBeA(View, 'BaseView')}
+        Model
+        View
     end
     
     methods
         % Run the controller
-        run(obj)
+        Run(obj)
     end
 end

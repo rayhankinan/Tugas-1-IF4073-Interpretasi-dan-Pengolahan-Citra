@@ -1,3 +1,3 @@
-wrapper = factories.ImageWrapperFactory.create("../images/Lena.bmp");
+controller = controllers.HistogramController();
 
-wrapper.getHistogram()
+controller.Run();
