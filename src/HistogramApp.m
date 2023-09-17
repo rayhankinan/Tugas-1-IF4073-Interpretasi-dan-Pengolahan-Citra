@@ -22,8 +22,9 @@ classdef HistogramApp < matlab.apps.AppBase
             
             % Create UIFigure and hide until all components are created
             app.UIFigure = uifigure('Visible', 'off');
-            app.UIFigure.Position = [100 100 640 480];
+            app.UIFigure.Position = [100 100 800 600];
             app.UIFigure.Name = 'MATLAB App';
+            app.UIFigure.Resize = 'off';
             
             % Show the figure after all components are created
             app.UIFigure.Visible = 'on';

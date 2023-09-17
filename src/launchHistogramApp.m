@@ -9,10 +9,7 @@ end % arguments
 f.Name = "Histogram App";
 
 % Create the layout.
-g = uigridlayout( ...
-    "Parent", f, ...
-    "RowHeight", {"1x", 40}, ...
-    "ColumnWidth", "1x" );
+g = uigridlayout("Parent", f, "RowHeight", {"1x", 40}, "ColumnWidth", "1x");
 
 % Create the model.
 m = models.HistogramModel();
@@ -29,7 +26,7 @@ tb = uitoolbar("Parent", f);
 uipushtool("Parent", tb, "Icon", icon, "Tooltip", "Reset the data.", "ClickedCallback", @onReset);
 
 % Function to reset the model.
-    function onReset( ~, ~ )
+    function onReset(~, ~)
         %ONRESET Callback function for the toolbar reset button.
         
         % Reset the model.

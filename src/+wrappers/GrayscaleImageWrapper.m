@@ -29,31 +29,37 @@ classdef GrayscaleImageWrapper < wrappers.BaseImageWrapper
         end
         
         % Get Histogram
-        function hist = GetHistogram(obj)
+        function [histRed, histGreen, histBlue] = GetHistogram(obj)
             arguments
                 obj wrappers.GrayscaleImageWrapper
             end
             
-            hist = imhist(obj.ImageData);
+            histRed = imhist(obj.ImageData);
+            histBlue = imhist(obj.ImageData);
+            histGreen = imhist(obj.ImageData);
         end
         
         % Get Histogram Equalized
-        function hist = GetHistogramEqualized(obj)
+        function [histRed, histGreen, histBlue] = GetHistogramEqualized(obj)
             arguments
                 obj wrappers.GrayscaleImageWrapper
             end
             
-            hist = histeq(obj.ImageData);
+            histRed = histeq(obj.ImageData);
+            histBlue = histeq(obj.ImageData);
+            histGreen = histeq(obj.ImageData);
         end
         
         % Get Histogram Specification
-        function hist = GetHistogramSpecification(obj, target)
+        function [histRed, histGreen, histBlue] = GetHistogramSpecification(obj, target)
             arguments
                 obj wrappers.GrayscaleImageWrapper
                 target wrappers.GrayscaleImageWrapper
             end
             
-            hist = histeq(obj.ImageData, target.ImageData);
+            histRed = histeq(obj.ImageData, target.ImageData);
+            histBlue = histeq(obj.ImageData, target.ImageData);
+            histGreen = histeq(obj.ImageData, target.ImageData);
         end
     end
 end

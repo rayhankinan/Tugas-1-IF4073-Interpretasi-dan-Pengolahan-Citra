@@ -23,15 +23,8 @@ classdef HistogramController < components.HistogramComponent
             %SETUP Initialize the controller.
             
             % Create grid and button.
-            g = uigridlayout( ...
-                "Parent", obj, ...
-                "RowHeight", "1x", ...
-                "ColumnWidth", "1x", ...
-                "Padding", 0 );
-            uibutton( ...
-                "Parent", g, ...
-                "Text", "Upload new image", ...
-                "ButtonPushedFcn", @obj.onButtonPushed );
+            g = uigridlayout("Parent", obj, "RowHeight", "1x", "ColumnWidth", "1x", "Padding", 0);
+            uibutton("Parent", g, "Text", "Upload new image", "ButtonPushedFcn", @obj.onButtonPushed);
         end % setup
         
         function update(~)
@@ -62,10 +55,10 @@ classdef HistogramController < components.HistogramComponent
             wrapper = utils.ImageWrapperFactory.create(imageData);
             
             % Calculate the histogram.
-            hist = wrapper.GetHistogram();
+            [histRed, histGreen, histBlue] = wrapper.GetHistogram();
             
             % Update the model.
-            obj.Model.setHistogram(hist);
+            obj.Model.setHistogram(histRed, histGreen, histBlue);
         end % onButtonPushed
     end
 end

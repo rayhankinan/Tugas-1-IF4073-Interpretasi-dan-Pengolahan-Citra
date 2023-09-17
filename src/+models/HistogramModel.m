@@ -3,7 +3,9 @@ classdef HistogramModel < handle
     
     properties (SetAccess = private)
         % Application data.
-        Histogram(:, 1) double = double.empty(0, 1)
+        HistogramRed(:, 1) double = double.empty(0, 1)
+        HistogramGreen(:, 1) double = double.empty(0, 1)
+        HistogramBlue(:, 1) double = double.empty(0, 1)
     end % properties (SetAccess = private)
     
     events (NotifyAccess = private)
@@ -12,14 +14,20 @@ classdef HistogramModel < handle
     end % events (NotifyAccess = private)
     
     methods
-        function setHistogram(obj, hist)
+        function setHistogram(obj, histRed, histGreen, histBlue)
             arguments
                 obj models.HistogramModel
-                hist(:, 1) double
+                histRed(:, 1) double
+                histGreen(:, 1) double
+                histBlue(:, 1) double
             end
             
             % Set the histogram.
-            obj.Histogram = hist;
+            obj.HistogramRed = histRed;
+            obj.HistogramGreen = histGreen;
+            obj.HistogramBlue = histBlue;
+            
+            % Broadcast the event.
             obj.notify("DataChanged");
         end % setFilepath
         
@@ -29,7 +37,11 @@ classdef HistogramModel < handle
             end
             
             % Reset the histogram.
-            obj.Histogram = double.empty(0, 1);
+            obj.HistogramRed = double.empty(0, 1);
+            obj.HistogramGreen = double.empty(0, 1);
+            obj.HistogramBlue = double.empty(0, 1);
+            
+            % Broadcast the event.
             obj.notify("DataChanged");
         end % reset
     end % methods

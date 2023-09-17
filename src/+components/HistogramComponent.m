@@ -19,10 +19,7 @@ classdef (Abstract) HistogramComponent < matlab.ui.componentcontainer.ComponentC
             % ComponentContainer objects are auto-parenting - that is, a
             % figure is created automatically if no parent argument is
             % specified.
-            obj@matlab.ui.componentcontainer.ComponentContainer( ...
-                "Parent", [], ...
-                "Units", "normalized", ...
-                "Position", [0, 0, 1, 1] )
+            obj@matlab.ui.componentcontainer.ComponentContainer("Parent", [], "Units", "normalized", "Position", [0, 0, 1, 1])
             
             % Store the model.
             obj.Model = model;
