@@ -47,21 +47,21 @@ classdef HistogramView < components.HistogramComponent
             xlabel(redAxes, "Intensity");
             ylabel(redAxes, "Pixels");
             
-            obj.BarChartRed = bar("Parent", redAxes, "XData", NaN, "YData", NaN, "FaceColor", "r", "EdgeColor", "none");
+            obj.BarChartRed = bar(NaN, "Parent", redAxes, "FaceColor", "r", "EdgeColor", "none");
             
             greenAxes = uiaxes("Parent", obj, "Position", [520 191 236 152]);
             title(greenAxes, "Green");
             xlabel(greenAxes, "Intensity");
             ylabel(greenAxes, "Pixels");
             
-            obj.BarChartGreen = bar("Parent", greenAxes, "XData", NaN, "YData", NaN, "FaceColor", "g", "EdgeColor", "none");
+            obj.BarChartGreen = bar(NaN, "Parent", greenAxes, "FaceColor", "g", "EdgeColor", "none");
             
             blueAxes = uiaxes("Parent", obj, "Position", [520 363 236 152]);
             title(blueAxes, "Blue");
             xlabel(blueAxes, "Intensity");
             ylabel(blueAxes, "Pixels");
             
-            obj.BarChartBlue = bar("Parent", blueAxes, "XData", NaN, "YData", NaN, "FaceColor", "b", "EdgeColor", "none");
+            obj.BarChartBlue = bar(NaN, "Parent", blueAxes, "FaceColor", "b", "EdgeColor", "none");
             
             % Create image preview.
             imagesAxes = uiaxes("Parent", obj, "Position", [43 181 357 305], "Colormap", gray(256), "Visible", "off", "YDir", "reverse");
