@@ -7,6 +7,9 @@ classdef HistogramView < components.HistogramComponent
         BarChartGreen(1, 1) matlab.graphics.chart.primitive.Bar
         BarChartBlue(1, 1) matlab.graphics.chart.primitive.Bar
         
+        % Image object used to visualize the data.
+        Image(1, 1) matlab.graphics.primitive.Image
+        
         % Listener object used to respond dynamically to model events.
         Listener(:, 1) event.listener {mustBeScalarOrEmpty}
     end % properties (Access = private)
@@ -59,6 +62,11 @@ classdef HistogramView < components.HistogramComponent
             ylabel(blueAxes, "Pixels");
             
             obj.BarChartBlue = bar("Parent", blueAxes, "XData", NaN, "YData", NaN, "FaceColor", "b", "EdgeColor", "none");
+            
+            % Create image preview.
+            imagesAxes = uiaxes("Parent", obj, "Position", [43 181 357 305], "Colormap", gray(256), "Visible", "off", "YDir", "reverse");
+            obj.Image = imagesc("Parent", imagesAxes, "CData", NaN);
+            
         end % setup
         
         function update(~)
@@ -85,11 +93,20 @@ classdef HistogramView < components.HistogramComponent
                 set(obj.BarChartRed, "XData", 1:numel(histRed), "YData", histRed);
                 set(obj.BarChartGreen, "XData", 1:numel(histGreen), "YData", histGreen);
                 set(obj.BarChartBlue, "XData", 1:numel(histBlue), "YData", histBlue);
+                
+                % Get image data.
+                imageData = wrapper.GetImageData();
+                
+                % Update the image preview.
+                set(obj.Image, "CData", imageData);
             else
                 % Clear the bar chart data.
                 set(obj.BarChartRed, "XData", NaN, "YData", NaN);
                 set(obj.BarChartGreen, "XData", NaN, "YData", NaN);
                 set(obj.BarChartBlue, "XData", NaN, "YData", NaN);
+                
+                % Clear the image preview.
+                set(obj.Image, "CData", NaN);
             end
             
         end % onDataChanged
