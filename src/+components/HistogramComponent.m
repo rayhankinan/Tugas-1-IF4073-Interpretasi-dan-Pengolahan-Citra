@@ -1,20 +1,17 @@
-classdef ( Abstract ) Component < matlab.ui.componentcontainer.ComponentContainer
+classdef (Abstract) HistogramComponent < matlab.ui.componentcontainer.ComponentContainer
     %COMPONENT Superclass for implementing views and controllers.
-    %
-    % Copyright 2021-2022 The MathWorks, Inc.
     
-    properties ( SetAccess = immutable, GetAccess = protected )
+    properties (SetAccess = immutable, GetAccess = protected)
         % Application data model.
-        Model(1, 1) models.Model
-    end % properties ( SetAccess = immutable, GetAccess = protected )
+        Model(1, 1) models.HistogramModel
+    end % properties (SetAccess = immutable, GetAccess = protected)
     
     methods
-        
-        function obj = Component( model )
+        function obj = HistogramComponent(model)
             %COMPONENT Component constructor.
             
             arguments
-                model(1, 1) models.Model
+                model(1, 1) models.HistogramModel
             end % arguments
             
             % Do not create a default figure parent for the component, and
@@ -29,9 +26,6 @@ classdef ( Abstract ) Component < matlab.ui.componentcontainer.ComponentContaine
             
             % Store the model.
             obj.Model = model;
-            
         end % constructor
-        
     end % methods
-    
 end % classdef

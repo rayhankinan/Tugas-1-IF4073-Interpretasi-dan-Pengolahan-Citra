@@ -1,4 +1,4 @@
-classdef App < matlab.apps.AppBase
+classdef HistogramApp < matlab.apps.AppBase
     
     % Properties that correspond to app components
     properties (Access = public)
@@ -10,7 +10,7 @@ classdef App < matlab.apps.AppBase
         
         % Code that executes after component creation
         function startupFcn(app)
-            launchMVCApp(app.UIFigure)
+            launchHistogramApp(app.UIFigure)
         end
     end
     
@@ -34,7 +34,7 @@ classdef App < matlab.apps.AppBase
     methods (Access = public)
         
         % Construct app
-        function app = App
+        function app = HistogramApp
             
             % Create UIFigure and components
             createComponents(app)
