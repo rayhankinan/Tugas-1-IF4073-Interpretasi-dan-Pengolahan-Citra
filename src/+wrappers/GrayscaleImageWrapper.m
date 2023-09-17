@@ -10,6 +10,15 @@ classdef GrayscaleImageWrapper < wrappers.BaseImageWrapper
             obj.Type = 'grayscale';
         end
         
+        % Check if Image is empty
+        function isEmpty = IsEmpty(obj)
+            arguments
+                obj wrappers.GrayscaleImageWrapper
+            end
+            
+            isEmpty = isempty(obj.ImageData);
+        end
+        
         % Get Image Data
         function data = GetImageData(obj)
             arguments

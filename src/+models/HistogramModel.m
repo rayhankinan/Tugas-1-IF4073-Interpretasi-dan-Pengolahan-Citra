@@ -3,9 +3,7 @@ classdef HistogramModel < handle
     
     properties (SetAccess = private)
         % Application data.
-        HistogramRed(:, 1) double = double.empty(0, 1)
-        HistogramGreen(:, 1) double = double.empty(0, 1)
-        HistogramBlue(:, 1) double = double.empty(0, 1)
+        ImageWrapper(1, 1) wrappers.BaseImageWrapper = wrappers.GrayscaleImageWrapper([]) % Empty image.
     end % properties (SetAccess = private)
     
     events (NotifyAccess = private)
@@ -14,18 +12,14 @@ classdef HistogramModel < handle
     end % events (NotifyAccess = private)
     
     methods
-        function setHistogram(obj, histRed, histGreen, histBlue)
+        function setWrapper(obj, imageWrapper)
             arguments
                 obj models.HistogramModel
-                histRed(:, 1) double
-                histGreen(:, 1) double
-                histBlue(:, 1) double
+                imageWrapper wrappers.BaseImageWrapper
             end
             
-            % Set the histogram.
-            obj.HistogramRed = histRed;
-            obj.HistogramGreen = histGreen;
-            obj.HistogramBlue = histBlue;
+            % Set the image wrapper.
+            obj.ImageWrapper = imageWrapper;
             
             % Broadcast the event.
             obj.notify("DataChanged");
@@ -36,10 +30,8 @@ classdef HistogramModel < handle
                 obj models.HistogramModel
             end
             
-            % Reset the histogram.
-            obj.HistogramRed = double.empty(0, 1);
-            obj.HistogramGreen = double.empty(0, 1);
-            obj.HistogramBlue = double.empty(0, 1);
+            % Reset the image wrapper.
+            obj.ImageWrapper = wrappers.GrayscaleImageWrapper([]); % Empty image.
             
             % Broadcast the event.
             obj.notify("DataChanged");

@@ -39,23 +39,26 @@ classdef HistogramView < components.HistogramComponent
             %SETUP Initialize the view.
             
             % Create a bar chart for each color channel.
-            redAxes = uiaxes("Parent", obj, "XLim", [0 255], "XTick", [0 128 255], "XTickLabelRotation", 0, "YTickLabelRotation", 0, "ZTickLabelRotation", 0, "Position", [437 19 236 152]);
-            title(redAxes, "Red")
-            xlabel(redAxes, "Intensity")
-            ylabel(redAxes, "Pixels")
-            obj.BarChartRed = bar("Parent", redAxes, "XData", NaN, "YData", NaN, "FaceColor", "r", "DisplayName", "Red");
+            redAxes = uiaxes("Parent", obj, "Position", [520 19 236 152]);
+            title(redAxes, "Red");
+            xlabel(redAxes, "Intensity");
+            ylabel(redAxes, "Pixels");
             
-            greenAxes = uiaxes("Parent", obj, "XLim", [0 255], "XTick", [0 128 255], "XTickLabelRotation", 0, "YTickLabelRotation", 0, "ZTickLabelRotation", 0, "Position", [437 191 236 152]);
-            title(greenAxes, "Green")
-            xlabel(greenAxes, "Intensity")
-            ylabel(greenAxes, "Pixels")
-            obj.BarChartGreen = bar("Parent", greenAxes, "XData", NaN, "YData", NaN, "FaceColor", "g", "DisplayName", "Green");
+            obj.BarChartRed = bar("Parent", redAxes, "XData", NaN, "YData", NaN, "FaceColor", "r", "EdgeColor", "none");
             
-            blueAxes = uiaxes("Parent", obj, "XLim", [0 255], "XTick", [0 128 255], "XTickLabelRotation", 0, "YTickLabelRotation", 0, "ZTickLabelRotation", 0, "Position", [437 363 236 152]);
-            title(blueAxes, "Blue")
-            xlabel(blueAxes, "Intensity")
-            ylabel(blueAxes, "Pixels")
-            obj.BarChartBlue = bar("Parent", blueAxes, "XData", NaN, "YData", NaN, "FaceColor", "b", "DisplayName", "Blue");
+            greenAxes = uiaxes("Parent", obj, "Position", [520 191 236 152]);
+            title(greenAxes, "Green");
+            xlabel(greenAxes, "Intensity");
+            ylabel(greenAxes, "Pixels");
+            
+            obj.BarChartGreen = bar("Parent", greenAxes, "XData", NaN, "YData", NaN, "FaceColor", "g", "EdgeColor", "none");
+            
+            blueAxes = uiaxes("Parent", obj, "Position", [520 363 236 152]);
+            title(blueAxes, "Blue");
+            xlabel(blueAxes, "Intensity");
+            ylabel(blueAxes, "Pixels");
+            
+            obj.BarChartBlue = bar("Parent", blueAxes, "XData", NaN, "YData", NaN, "FaceColor", "b", "EdgeColor", "none");
         end % setup
         
         function update(~)
@@ -70,15 +73,25 @@ classdef HistogramView < components.HistogramComponent
             %ONDATACHANGED Update the view in response to a change in the
             %model.
             
-            % Retrieve the most recent data and update the bar.
-            histRed = obj.Model.HistogramRed;
-            set(obj.BarChartRed, "XData", 1:numel(histRed), "YData", histRed);
+            % Retrieve the most recent image wrapper.
+            wrapper = obj.Model.ImageWrapper;
             
-            histGreen = obj.Model.HistogramGreen;
-            set(obj.BarChartGreen, "XData", 1:numel(histGreen), "YData", histGreen);
+            % Update the bar chart data.
+            if ~wrapper.IsEmpty()
+                % Compute the histogram of each color channel.
+                [histRed, histGreen, histBlue] = wrapper.GetHistogram();
+                
+                % Update the bar chart data.
+                set(obj.BarChartRed, "XData", 1:numel(histRed), "YData", histRed);
+                set(obj.BarChartGreen, "XData", 1:numel(histGreen), "YData", histGreen);
+                set(obj.BarChartBlue, "XData", 1:numel(histBlue), "YData", histBlue);
+            else
+                % Clear the bar chart data.
+                set(obj.BarChartRed, "XData", NaN, "YData", NaN);
+                set(obj.BarChartGreen, "XData", NaN, "YData", NaN);
+                set(obj.BarChartBlue, "XData", NaN, "YData", NaN);
+            end
             
-            histBlue = obj.Model.HistogramBlue;
-            set(obj.BarChartBlue, "XData", 1:numel(histBlue), "YData", histBlue);
         end % onDataChanged
     end % methods (Access = private)
 end

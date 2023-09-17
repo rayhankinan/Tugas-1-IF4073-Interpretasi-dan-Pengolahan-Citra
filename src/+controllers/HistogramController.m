@@ -54,11 +54,8 @@ classdef HistogramController < components.HistogramComponent
             % Create an image wrapper object.
             wrapper = utils.ImageWrapperFactory.create(imageData);
             
-            % Calculate the histogram.
-            [histRed, histGreen, histBlue] = wrapper.GetHistogram();
-            
             % Update the model.
-            obj.Model.setHistogram(histRed, histGreen, histBlue);
+            obj.Model.setWrapper(wrapper);
         end % onButtonPushed
     end
 end
