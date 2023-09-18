@@ -1,17 +1,17 @@
-classdef HistogramController < components.HistogramComponent
+classdef BrighteningController < components.BrighteningComponent
     %CONTROLLER Provides an interactive control to generate new data.
     
     methods
-        function obj = HistogramController(model, namedArgs)
+        function obj = BrighteningController(model, namedArgs)
             % CONTROLLER Controller constructor.
             
             arguments
-                model(1, 1) models.HistogramModel
-                namedArgs.?controllers.HistogramController
+                model(1, 1) models.BrighteningModel
+                namedArgs.?controllers.BrighteningController
             end % arguments
             
             % Call the superclass constructor.
-            obj@components.HistogramComponent(model);
+            obj@components.BrighteningComponent(model);
             
             % Set any user-specified properties.
             set(obj, namedArgs);
@@ -23,13 +23,16 @@ classdef HistogramController < components.HistogramComponent
             %SETUP Initialize the controller.
             
             % Create a grid layout.
-            g = uigridlayout("Parent", obj, "RowHeight", "1x", "ColumnWidth", {"1x", "1x"}, "Padding", 0);
+            g = uigridlayout("Parent", obj, "RowHeight", {"1x", "1x"}, "ColumnWidth", {"1x", "1x"}, "Padding", 0);
             
             % Create upload button.
             uibutton("Parent", g, "Text", "Upload new image", "ButtonPushedFcn", @obj.onUploadButtonPushed);
             
             % Create reset button.
             uibutton("Parent", g, "Text", "Reset", "ButtonPushedFcn", @obj.onResetButtonPushed);
+            
+            % Create execute button.
+            uibutton("Parent", g, "Text", "Execute", "ButtonPushedFcn", @obj.onExecuteButtonPushed);
         end % setup
         
         function update(~)
@@ -61,7 +64,7 @@ classdef HistogramController < components.HistogramComponent
             wrapper = utils.ImageWrapperFactory.create(imageData);
             
             % Update the model.
-            obj.Model.SetWrapper(wrapper);
+            obj.Model.SetInputWrapper(wrapper);
         end % onButtonPushed
         
         function onResetButtonPushed(obj, ~, ~)
@@ -69,6 +72,19 @@ classdef HistogramController < components.HistogramComponent
             
             % Reset the model.
             obj.Model.ResetModel();
+        end
+        
+        function onExecuteButtonPushed(obj, ~, ~)
+            %ONEXECUTEBUTTONPUSHED Execute the model.
+            
+            % Get the brightened image data.
+            imageData = obj.Model.GetBrightening();
+            
+            % Create an image wrapper object.
+            wrapper = utils.ImageWrapperFactory.create(imageData);
+            
+            % Update the model.
+            obj.Model.SetOutputWrapper(wrapper);
         end
     end
 end
