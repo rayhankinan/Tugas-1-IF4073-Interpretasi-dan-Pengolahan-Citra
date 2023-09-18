@@ -6,7 +6,7 @@ arguments
 end % arguments
 
 % Rename figure.
-f.Name = "Histogram App";
+f.Name = "Image Enhancement App";
 
 % Create the layout.
 g = uigridlayout("Parent", f, "RowHeight", {"1x", 40}, "ColumnWidth", "1x");

@@ -66,9 +66,51 @@ classdef GrayscaleImageWrapper < wrappers.BaseImageWrapper
                 target wrappers.GrayscaleImageWrapper
             end
             
+            % TODO: Ubah ini dengan fungsi buatan sendiri
             histRed = histeq(obj.ImageData, target.ImageData);
             histBlue = histeq(obj.ImageData, target.ImageData);
             histGreen = histeq(obj.ImageData, target.ImageData);
+        end
+        
+        % Get Image Brightening
+        function imageData = GetBrightening(obj, a, b)
+            arguments
+                obj wrappers.ColoredImageWrapper
+                a double;
+                b double;
+            end
+            
+            imageData = a * obj.ImageData + b;
+        end
+        
+        % Get Negative Image
+        function imageData = GetNegative(obj)
+            arguments
+                obj wrappers.ColoredImageWrapper
+            end
+            
+            imageData = 255 - obj.ImageData;
+        end
+        
+        % Get Log Transformation
+        function imageData = GetLogTransformation(obj, c)
+            arguments
+                obj wrappers.ColoredImageWrapper
+                c double;
+            end
+            
+            imageData = c * log(1 + double(obj.ImageData));
+        end
+        
+        % Get Power Law Transformation
+        function imageData = GetPowerLawTransformation(obj, c, gamma)
+            arguments
+                obj wrappers.ColoredImageWrapper
+                c double;
+                gamma double;
+            end
+            
+            imageData = c * double(obj.ImageData) .^ gamma;
         end
     end
 end

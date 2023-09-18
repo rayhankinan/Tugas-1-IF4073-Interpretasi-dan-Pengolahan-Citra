@@ -43,6 +43,7 @@ classdef ColoredImageWrapper < wrappers.BaseImageWrapper
                 obj wrappers.ColoredImageWrapper
             end
             
+            % TODO: Ubah ini dengan fungsi buatan sendiri
             histRed = imhist(obj.ImageData(:, :, 1));
             histGreen = imhist(obj.ImageData(:, :, 2));
             histBlue = imhist(obj.ImageData(:, :, 3));
@@ -54,6 +55,7 @@ classdef ColoredImageWrapper < wrappers.BaseImageWrapper
                 obj wrappers.ColoredImageWrapper
             end
             
+            % TODO: Ubah ini dengan fungsi buatan sendiri
             histRed = histeq(obj.ImageData(:, :, 1));
             histGreen = histeq(obj.ImageData(:, :, 2));
             histBlue = histeq(obj.ImageData(:, :, 3));
@@ -66,9 +68,40 @@ classdef ColoredImageWrapper < wrappers.BaseImageWrapper
                 target wrappers.ColoredImageWrapper
             end
             
+            % TODO: Ubah ini dengan fungsi buatan sendiri
             histRed = histeq(obj.ImageData(:, :, 1), target.ImageData(:, :, 1));
             histGreen = histeq(obj.ImageData(:, :, 2), target.ImageData(:, :, 2));
             histBlue = histeq(obj.ImageData(:, :, 3), target.ImageData(:, :, 3));
+        end
+        
+        % Get Image Brightening
+        function imageData = GetBrightening(obj, a, b)
+            arguments
+                obj wrappers.ColoredImageWrapper
+                a double;
+                b double;
+            end
+            
+            imageData = a * obj.ImageData + b;
+        end
+        
+        % Get Negative Image
+        function imageData = GetNegative(obj)
+            arguments
+                obj wrappers.ColoredImageWrapper
+            end
+            
+            imageData = 255 - obj.ImageData;
+        end
+        
+        % Get Log Transformation
+        function imageData = GetLogTransformation(obj, c)
+            arguments
+                obj wrappers.ColoredImageWrapper
+                c double;
+            end
+            
+            imageData = c * log(1 + double(obj.ImageData));
         end
     end
 end

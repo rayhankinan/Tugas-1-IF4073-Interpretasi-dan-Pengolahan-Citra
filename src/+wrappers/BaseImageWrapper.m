@@ -22,5 +22,17 @@ classdef (Abstract) BaseImageWrapper
         
         % Get Histogram Specification
         GetHistogramSpecification(obj, target)
+        
+        % Get Image Brightening
+        GetBrightening(obj, a, b)
+        
+        % Get Negative Image
+        GetNegative(obj)
+        
+        % Get Log Transformation
+        GetLogTransformation(obj, c)
+        
+        % Get Power Law Transformation
+        GetPowerLawTransformation(obj, c, gamma)
     end
 end
