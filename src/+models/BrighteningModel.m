@@ -16,7 +16,7 @@ classdef BrighteningModel < handle
     end % events (NotifyAccess = private)
     
     methods
-        function SetWrapper(obj, imageWrapper)
+        function SetInputWrapper(obj, imageWrapper)
             arguments
                 obj models.BrighteningModel
                 imageWrapper wrappers.BaseImageWrapper

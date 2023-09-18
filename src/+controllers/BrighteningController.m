@@ -1,6 +1,12 @@
 classdef BrighteningController < components.BrighteningComponent
     %CONTROLLER Provides an interactive control to generate new data.
     
+    properties (Access = private)
+        % Text input for the a and b parameters.
+        InputA(1, 1) matlab.ui.control.NumericEditField
+        InputB(1, 1) matlab.ui.control.NumericEditField
+    end
+    
     methods
         function obj = BrighteningController(model, namedArgs)
             % CONTROLLER Controller constructor.
@@ -23,16 +29,22 @@ classdef BrighteningController < components.BrighteningComponent
             %SETUP Initialize the controller.
             
             % Create a grid layout.
-            g = uigridlayout("Parent", obj, "RowHeight", {"1x", "1x"}, "ColumnWidth", {"1x", "1x"}, "Padding", 0);
+            g = uigridlayout("Parent", obj, "RowHeight", {"1x", "1x"}, "ColumnWidth", {"1x", "1x", "1x"}, "Padding", 0);
+            
+            % Create input "a" parameter.
+            obj.InputA = uieditfield("numeric", "Parent", g, "Value", 0);
+            
+            % Create input "b" parameter.
+            obj.InputB = uieditfield("numeric", "Parent", g, "Value", 0);
+            
+            % Create execute button.
+            uibutton("Parent", g, "Text", "Execute", "ButtonPushedFcn", @obj.onExecuteButtonPushed);
             
             % Create upload button.
             uibutton("Parent", g, "Text", "Upload new image", "ButtonPushedFcn", @obj.onUploadButtonPushed);
             
             % Create reset button.
             uibutton("Parent", g, "Text", "Reset", "ButtonPushedFcn", @obj.onResetButtonPushed);
-            
-            % Create execute button.
-            uibutton("Parent", g, "Text", "Execute", "ButtonPushedFcn", @obj.onExecuteButtonPushed);
         end % setup
         
         function update(~)
@@ -78,7 +90,7 @@ classdef BrighteningController < components.BrighteningComponent
             %ONEXECUTEBUTTONPUSHED Execute the model.
             
             % Get the brightened image data.
-            imageData = obj.Model.GetBrightening();
+            imageData = obj.Model.GetBrightening(obj.InputA.Value, obj.InputB.Value);
             
             % Create an image wrapper object.
             wrapper = utils.ImageWrapperFactory.create(imageData);

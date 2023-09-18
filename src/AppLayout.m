@@ -1,7 +1,11 @@
 classdef AppLayout < matlab.ui.componentcontainer.ComponentContainer
     properties (Access = private)
-        % Map of page names to page objects.
-        PageMap containers.Map
+        % Page objects.
+        Histogram pages.HistogramPage
+        Brightening pages.BrighteningPage
+        
+        % Key to the current page.
+        CurrentPageKey string
         
         % UI components.
         DropDown matlab.ui.control.DropDown
@@ -17,9 +21,6 @@ classdef AppLayout < matlab.ui.componentcontainer.ComponentContainer
             
             % Call the superclass constructor.
             obj@matlab.ui.componentcontainer.ComponentContainer("Parent", [], "Units", "normalized", "Position", [0, 0, 1, 1]);
-            
-            % Initialize the application.
-            obj.PageMap = containers.Map();
             
             % Set any user-specified properties.
             set(obj, namedArgs);
@@ -38,10 +39,14 @@ classdef AppLayout < matlab.ui.componentcontainer.ComponentContainer
             pagePanel = uipanel("Parent", g, "Position", [0, 0, 50, 50]);
             
             % Populate the pages.
-            obj.PageMap("Histogram") = pages.HistogramPage("Parent", pagePanel, "Visible", "On");
+            obj.Histogram = pages.HistogramPage("Parent", pagePanel, "Visible", "On");
+            obj.Brightening = pages.BrighteningPage("Parent", pagePanel, "Visible", "Off");
+            
+            % Set the current page.
+            obj.CurrentPageKey = "Histogram";
             
             % Fill the drop-down menu with the page names.
-            obj.DropDown = uidropdown("Parent", dropdownPanel, "Items", obj.PageMap.keys, "Value", "Histogram", "ValueChangedFcn", @obj.onDropDownValueChanged);
+            obj.DropDown = uidropdown("Parent", dropdownPanel, "Items", ["Histogram" "Brightening"], "Value", obj.CurrentPageKey, "ValueChangedFcn", @obj.onDropDownValueChanged);
         end % setup
         
         function update(~)
@@ -57,10 +62,13 @@ classdef AppLayout < matlab.ui.componentcontainer.ComponentContainer
             %menu selection.
             
             % Hide the current page.
-            set(obj.PageMap(obj.DropDown.Value), "Visible", "Off");
+            set(get(obj, obj.CurrentPageKey), "Visible", "Off");
+            
+            % Update the current page.
+            obj.CurrentPageKey = obj.DropDown.Value;
             
             % Show the new page.
-            set(obj.PageMap(obj.DropDown.Value), "Visible", "On");
+            set(get(obj, obj.CurrentPageKey), "Visible", "On");
         end % onDropDownValueChanged
     end % methods
 end
