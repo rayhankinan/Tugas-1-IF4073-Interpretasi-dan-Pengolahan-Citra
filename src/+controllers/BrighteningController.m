@@ -89,8 +89,11 @@ classdef BrighteningController < components.BrighteningComponent
         function onExecuteButtonPushed(obj, ~, ~)
             %ONEXECUTEBUTTONPUSHED Execute the model.
             
+            % Get wrapper
+            wrapper = obj.Model.InputImageWrapper;
+            
             % Get the brightened image data.
-            imageData = obj.Model.GetBrightening(obj.InputA.Value, obj.InputB.Value);
+            imageData = wrapper.GetBrightening(obj.InputA.Value, obj.InputB.Value);
             
             % Create an image wrapper object.
             wrapper = utils.ImageWrapperFactory.create(imageData);
