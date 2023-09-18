@@ -12,7 +12,7 @@ classdef HistogramModel < handle
     end % events (NotifyAccess = private)
     
     methods
-        function setWrapper(obj, imageWrapper)
+        function SetWrapper(obj, imageWrapper)
             arguments
                 obj models.HistogramModel
                 imageWrapper wrappers.BaseImageWrapper
@@ -25,7 +25,7 @@ classdef HistogramModel < handle
             obj.notify("DataChanged");
         end % setFilepath
         
-        function reset(obj)
+        function ResetModel(obj)
             arguments
                 obj models.HistogramModel
             end

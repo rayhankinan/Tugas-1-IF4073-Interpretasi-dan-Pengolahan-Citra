@@ -42,21 +42,21 @@ classdef HistogramView < components.HistogramComponent
             %SETUP Initialize the view.
             
             % Create a bar chart for each color channel.
-            redAxes = uiaxes("Parent", obj, "Position", [520 19 236 152]);
+            redAxes = uiaxes("Parent", obj, "Position", [0 150 250 150]);
             title(redAxes, "Red");
             xlabel(redAxes, "Intensity");
             ylabel(redAxes, "Pixels");
             
             obj.BarChartRed = bar(NaN, "Parent", redAxes, "FaceColor", "r", "EdgeColor", "none");
             
-            greenAxes = uiaxes("Parent", obj, "Position", [520 191 236 152]);
+            greenAxes = uiaxes("Parent", obj, "Position", [250 150 250 150]);
             title(greenAxes, "Green");
             xlabel(greenAxes, "Intensity");
             ylabel(greenAxes, "Pixels");
             
             obj.BarChartGreen = bar(NaN, "Parent", greenAxes, "FaceColor", "g", "EdgeColor", "none");
             
-            blueAxes = uiaxes("Parent", obj, "Position", [520 363 236 152]);
+            blueAxes = uiaxes("Parent", obj, "Position", [0 0 250 150]);
             title(blueAxes, "Blue");
             xlabel(blueAxes, "Intensity");
             ylabel(blueAxes, "Pixels");
@@ -64,7 +64,7 @@ classdef HistogramView < components.HistogramComponent
             obj.BarChartBlue = bar(NaN, "Parent", blueAxes, "FaceColor", "b", "EdgeColor", "none");
             
             % Create image preview.
-            imagesAxes = uiaxes("Parent", obj, "Position", [43 181 357 305], "Colormap", gray(256), "Visible", "off", "YDir", "reverse");
+            imagesAxes = uiaxes("Parent", obj, "Position", [0 300 360 320], "Colormap", gray(256), "Visible", "off", "YDir", "reverse");
             obj.Image = imagesc("Parent", imagesAxes, "CData", NaN);
             
         end % setup

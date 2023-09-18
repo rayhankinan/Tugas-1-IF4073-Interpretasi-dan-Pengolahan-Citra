@@ -23,7 +23,7 @@ classdef HistogramPage < components.HistogramComponent
             %SETUP Initialize the page.
             
             % Create the layout.
-            g = uigridlayout("Parent", obj, "RowHeight", {"1x", 40}, "ColumnWidth", "1x");
+            g = uigridlayout("Parent", obj, "RowHeight", {"1x", 50}, "ColumnWidth", "1x");
             
             % Create the view.
             views.HistogramView(obj.Model, "Parent", g);

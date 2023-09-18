@@ -22,9 +22,14 @@ classdef HistogramController < components.HistogramComponent
         function setup(obj)
             %SETUP Initialize the controller.
             
-            % Create grid and button.
-            g = uigridlayout("Parent", obj, "RowHeight", "1x", "ColumnWidth", "1x", "Padding", 0);
-            uibutton("Parent", g, "Text", "Upload new image", "ButtonPushedFcn", @obj.onButtonPushed);
+            % Create a grid layout.
+            g = uigridlayout("Parent", obj, "RowHeight", "1x", "ColumnWidth", {"1x", 600}, "Padding", 0);
+            
+            % Create upload button.
+            uibutton("Parent", g, "Text", "Upload new image", "ButtonPushedFcn", @obj.onUploadButtonPushed);
+            
+            % % Create reset button.
+            uibutton("Parent", g, "Text", "Reset", "ButtonPushedFcn", @obj.onResetButtonPushed);
         end % setup
         
         function update(~)
@@ -35,7 +40,7 @@ classdef HistogramController < components.HistogramComponent
     end % methods (Access = protected)
     
     methods (Access = private)
-        function onButtonPushed(obj, ~, ~)
+        function onUploadButtonPushed(obj, ~, ~)
             
             % Get the image file.
             [filename, pathname] = uigetfile("*.bmp", "Select an image");
@@ -55,7 +60,14 @@ classdef HistogramController < components.HistogramComponent
             wrapper = utils.ImageWrapperFactory.create(imageData);
             
             % Update the model.
-            obj.Model.setWrapper(wrapper);
+            obj.Model.SetWrapper(wrapper);
         end % onButtonPushed
+        
+        function onResetButtonPushed(obj, ~, ~)
+            %ONRESETBUTTONPUSHED Reset the model.
+            
+            % Reset the model.
+            obj.Model.ResetModel();
+        end
     end
 end

@@ -22,8 +22,9 @@ classdef App < matlab.apps.AppBase
             
             % Create UIFigure and hide until all components are created
             app.UIFigure = uifigure('Visible', 'off');
-            app.UIFigure.Position = [100 100 800 600];
-            app.UIFigure.Name = 'MATLAB App';
+            app.UIFigure.AutoResizeChildren = 'off';
+            app.UIFigure.Position = [100 100 1200 800];
+            app.UIFigure.Name = 'Image Enhancement App';
             app.UIFigure.Resize = 'off';
             
             % Show the figure after all components are created
