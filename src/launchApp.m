@@ -8,17 +8,11 @@ end % arguments
 % Rename figure.
 f.Name = "Image Enhancement App";
 
-% Create the layout.
-g = uigridlayout("Parent", f, "RowHeight", {"1x", 40}, "ColumnWidth", "1x");
-
 % Create the model.
 m = models.HistogramModel();
 
-% Create the view.
-views.HistogramView(m, "Parent", g);
-
-% Create the controller.
-controllers.HistogramController(m, "Parent", g);
+% Create the page
+pages.HistogramPage(m, "Parent", f);
 
 % Create toolbar to reset the model.
 icon = fullfile(matlabroot, "toolbox", "matlab", "icons", "tool_rotate_3d.png");

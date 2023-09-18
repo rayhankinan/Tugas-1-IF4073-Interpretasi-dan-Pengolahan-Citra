@@ -14,7 +14,7 @@ classdef HistogramController < components.HistogramComponent
             obj@components.HistogramComponent(model);
             
             % Set any user-specified properties.
-            set(obj, namedArgs)
+            set(obj, namedArgs);
         end % constructor
     end % methods
     
