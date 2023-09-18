@@ -10,7 +10,7 @@ classdef App < matlab.apps.AppBase
         
         % Code that executes after component creation
         function startupFcn(app)
-            AppLayout(app.UIFigure).Run();
+            AppLayout("Parent", app.UIFigure);
         end
     end
     
