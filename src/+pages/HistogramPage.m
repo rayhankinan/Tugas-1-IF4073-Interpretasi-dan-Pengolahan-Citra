@@ -2,16 +2,15 @@ classdef HistogramPage < components.HistogramComponent
     %PAGE Provides a component to wrap view and controller for data.
     
     methods
-        function obj = HistogramPage(model, namedArgs)
+        function obj = HistogramPage(namedArgs)
             % PAGE Page constructor.
             
             arguments
-                model(1, 1) models.HistogramModel
                 namedArgs.?pages.HistogramPage
             end
             
             % Call the superclass constructor.
-            obj@components.HistogramComponent(model);
+            obj@components.HistogramComponent(models.HistogramModel());
             
             % Set any user-specified properties.
             set(obj, namedArgs);
