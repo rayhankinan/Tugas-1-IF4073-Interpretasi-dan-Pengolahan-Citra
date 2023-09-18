@@ -33,14 +33,15 @@ classdef AppLayout < matlab.ui.componentcontainer.ComponentContainer
             % Create the layout.
             g = uigridlayout("Parent", obj, "RowHeight", {50, "1x"}, "ColumnWidth", "1x");
             
-            % Create the axes for the dropdown.
-            panel = uipanel("Parent", g, "Position", [0, 0, 50, 50]);
+            % Create panels.
+            dropdownPanel = uipanel("Parent", g, "Position", [0, 0, 50, 50]);
+            pagePanel = uipanel("Parent", g, "Position", [0, 0, 50, 50]);
             
             % Populate the pages.
-            obj.PageMap("Histogram") = pages.HistogramPage("Parent", g, "Visible", "On");
+            obj.PageMap("Histogram") = pages.HistogramPage("Parent", pagePanel, "Visible", "On");
             
             % Fill the drop-down menu with the page names.
-            obj.DropDown = uidropdown("Parent", panel, "Items", obj.PageMap.keys, "Value", "Histogram", "ValueChangedFcn", @obj.onDropDownValueChanged);
+            obj.DropDown = uidropdown("Parent", dropdownPanel, "Items", obj.PageMap.keys, "Value", "Histogram", "ValueChangedFcn", @obj.onDropDownValueChanged);
         end % setup
         
         function update(~)
