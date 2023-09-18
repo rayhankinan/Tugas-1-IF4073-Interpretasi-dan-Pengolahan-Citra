@@ -1,4 +1,4 @@
-function varargout = launchHistogramApp(f)
+function varargout = launchApp(f)
 %LAUNCHMVCAPP Launch the Histogram application.
 
 arguments
