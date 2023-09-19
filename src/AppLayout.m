@@ -1,19 +1,22 @@
 classdef AppLayout < matlab.ui.componentcontainer.ComponentContainer
     properties (Access = private)
         % Page objects.
-        Histogram pages.HistogramPage
-        Brightening pages.BrighteningPage
-        Negative pages.NegativePage
-        LogTransformation pages.LogTransformationPage
-        PowerTransformation pages.PowerTransformationPage
-        HistogramEqualization pages.HistogramEqualizationPage
-        HistogramMatching pages.HistogramMatchingPage
-        
-        % Key to the current page.
-        CurrentPageKey string
+        Histogram(1, 1) pages.HistogramPage
+        Brightening(1, 1) pages.BrighteningPage
+        Negative(1, 1) pages.NegativePage
+        LogTransformation(1, 1) pages.LogTransformationPage
+        PowerTransformation(1, 1) pages.PowerTransformationPage
+        HistogramEqualization(1, 1) pages.HistogramEqualizationPage
+        HistogramMatching(1, 1) pages.HistogramMatchingPage
         
         % UI components.
-        DropDown matlab.ui.control.DropDown
+        DropDown(1, 1) matlab.ui.control.DropDown
+        
+        % App Model.
+        Model(1, 1) models.AppModel
+        
+        % Listener object used to respond dynamically to model events.
+        Listener(:, 1) event.listener {mustBeScalarOrEmpty}
     end
     
     methods
@@ -27,8 +30,14 @@ classdef AppLayout < matlab.ui.componentcontainer.ComponentContainer
             % Call the superclass constructor.
             obj@matlab.ui.componentcontainer.ComponentContainer("Parent", [], "Units", "normalized", "Position", [0, 0, 1, 1]);
             
+            % Create a listener for the a parameter.
+            obj.Listener = listener(obj.Model, "KeyChanged", @obj.onKeyChanged);
+            
             % Set any user-specified properties.
             set(obj, namedArgs);
+            
+            % Refresh the layout.
+            obj.onKeyChanged();
         end % constructor
     end
     
@@ -52,11 +61,8 @@ classdef AppLayout < matlab.ui.componentcontainer.ComponentContainer
             obj.HistogramEqualization = pages.HistogramEqualizationPage("Parent", pagePanel, "Visible", "Off");
             obj.HistogramMatching = pages.HistogramMatchingPage("Parent", pagePanel, "Visible", "Off");
             
-            % Set the current page.
-            obj.CurrentPageKey = "Histogram";
-            
             % Fill the drop-down menu with the page names.
-            obj.DropDown = uidropdown("Parent", dropdownPanel, "Items", ["Histogram" "Brightening" "Negative" "LogTransformation" "PowerTransformation" "HistogramEqualization" "HistogramMatching"], "Value", obj.CurrentPageKey, "ValueChangedFcn", @obj.onDropDownValueChanged);
+            obj.DropDown = uidropdown("Parent", dropdownPanel, "Items", ["Histogram" "Brightening" "Negative" "LogTransformation" "PowerTransformation" "HistogramEqualization" "HistogramMatching"], "ValueChangedFcn", @obj.onDropDownValueChanged);
         end % setup
         
         function update(~)
@@ -67,18 +73,25 @@ classdef AppLayout < matlab.ui.componentcontainer.ComponentContainer
     end % methods (Access = protected)
     
     methods (Access = private)
+        function onKeyChanged(obj, ~, ~)
+            %ONKEYCHANGED Respond to a change in the model key.
+            
+            % Show the new page.
+            set(get(obj, obj.Model.CurrentPageKey), "Visible", "On");
+            
+            % Update the drop-down menu.
+            set(obj.DropDown, "Value", obj.Model.CurrentPageKey);
+        end % onKeyChanged
+        
         function onDropDownValueChanged(obj, ~, ~)
             %ONDROPDOWNVALUECHANGED Respond to a change in the drop-down
             %menu selection.
             
             % Hide the current page.
-            set(get(obj, obj.CurrentPageKey), "Visible", "Off");
+            set(get(obj, obj.Model.CurrentPageKey), "Visible", "Off");
             
-            % Update the current page.
-            obj.CurrentPageKey = obj.DropDown.Value;
-            
-            % Show the new page.
-            set(get(obj, obj.CurrentPageKey), "Visible", "On");
+            % Update the model.
+            obj.Model.SetCurrentPageKey(obj.DropDown.Value);
         end % onDropDownValueChanged
     end % methods
 end

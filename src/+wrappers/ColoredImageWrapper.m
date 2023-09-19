@@ -73,13 +73,13 @@ classdef ColoredImageWrapper < wrappers.BaseImageWrapper
                 redChan = utils.Histogram.histmatch(obj.ImageData(:, :, 1), target.ImageData(:, :, 1));
                 greenChan = utils.Histogram.histmatch(obj.ImageData(:, :, 2), target.ImageData(:, :, 2));
                 blueChan = utils.Histogram.histmatch(obj.ImageData(:, :, 3), target.ImageData(:, :, 3));
-
+                
                 imageData = cat(3, redChan, greenChan, blueChan);
             else
                 redChan = utils.Histogram.histmatch(obj.ImageData(:, :, 1), target.ImageData);
                 greenChan = utils.Histogram.histmatch(obj.ImageData(:, :, 2), target.ImageData);
                 blueChan = utils.Histogram.histmatch(obj.ImageData(:, :, 3), target.ImageData);
-
+                
                 imageData = cat(3, redChan, greenChan, blueChan);
             end
         end
@@ -112,9 +112,7 @@ classdef ColoredImageWrapper < wrappers.BaseImageWrapper
             end
             
             doubleImageData = im2double(obj.ImageData);
-            
             doubleImageDataProcessed = c * log(1 + doubleImageData);
-            
             imageData = im2uint8(doubleImageDataProcessed);
         end
         
@@ -127,9 +125,7 @@ classdef ColoredImageWrapper < wrappers.BaseImageWrapper
             end
             
             doubleImageData = im2double(obj.ImageData);
-            
             doubleImageDataProcessed = c * doubleImageData .^ gamma;
-            
             imageData = im2uint8(doubleImageDataProcessed);
         end
     end
