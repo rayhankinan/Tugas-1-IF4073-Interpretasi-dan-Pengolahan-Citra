@@ -58,7 +58,7 @@ classdef ColoredImageWrapper < wrappers.BaseImageWrapper
             redChan = utils.Histogram.histeq(obj.ImageData(:, :, 1));
             greenChan = utils.Histogram.histeq(obj.ImageData(:, :, 2));
             blueChan = utils.Histogram.histeq(obj.ImageData(:, :, 3));
-
+            
             imageData = cat(3, redChan, greenChan, blueChan);
         end
         
@@ -100,6 +100,17 @@ classdef ColoredImageWrapper < wrappers.BaseImageWrapper
             end
             
             imageData = c * log(1 + double(obj.ImageData));
+        end
+        
+        % Get Power Law Transformation
+        function imageData = GetPowerLawTransformation(obj, c, gamma)
+            arguments
+                obj wrappers.ColoredImageWrapper
+                c double;
+                gamma double;
+            end
+            
+            imageData = c * double(obj.ImageData) .^ gamma;
         end
     end
 end

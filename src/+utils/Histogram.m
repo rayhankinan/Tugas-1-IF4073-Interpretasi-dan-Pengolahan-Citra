@@ -7,7 +7,7 @@ classdef Histogram
             
             % Make a 1 dimensional array of zeros with length 256
             histogram = zeros(1, 256);
-
+            
             % Loop through the image
             [m, n] = size(imageData);
             for i = 1:m
@@ -19,26 +19,26 @@ classdef Histogram
                 end
             end
         end
-
+        
         function newImage = histeq(imageData)
             arguments
                 imageData uint8
             end %arguments
-
+            
             % Compute histogram value
-            oldHistogram = utils.Histogram.hist(imageData)
-
+            oldHistogram = utils.Histogram.hist(imageData);
+            
             % Make a 1 dimensional array of zeros with length 256 to store
             % probability values
             probabilities = zeros(1, 256, 'double');
-
+            
             % Compute probabilities
             [m, n] = size(imageData);
             imageSize = m * n;
             for i = 1:256
                 probabilities(i) = oldHistogram(i) / imageSize;
             end
-
+            
             % Make a 1 dimensional array of zeros with length 256 to store
             % cumulative probability values
             cumulativeProbabilities = zeros(1, 256, 'double');
@@ -49,7 +49,7 @@ classdef Histogram
                     cumulativeProbabilities(i) = cumulativeProbabilities(i - 1) + probabilities(i);
                 end
             end
-
+            
             % Compute new image data
             newImage = zeros(m, n, 'uint8');
             for i = 1:m
