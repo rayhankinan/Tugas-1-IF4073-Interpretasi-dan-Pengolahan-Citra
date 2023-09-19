@@ -67,10 +67,10 @@ classdef HistogramEqualizationController < components.HistogramEqualizationCompo
             imageData = imread(filepath);
             
             % Create an image wrapper object.
-            wrapper = utils.ImageWrapperFactory.create(imageData);
+            inputWrapper = utils.ImageWrapperFactory.create(imageData);
             
             % Update the model.
-            obj.Model.SetInputWrapper(wrapper);
+            obj.Model.SetInputWrapper(inputWrapper);
         end % onButtonPushed
         
         function onResetButtonPushed(obj, ~, ~)
@@ -84,16 +84,16 @@ classdef HistogramEqualizationController < components.HistogramEqualizationCompo
             %ONEXECUTEBUTTONPUSHED Execute the model.
             
             % Get wrapper
-            wrapper = obj.Model.InputImageWrapper;
+            inputWrapper = obj.Model.InputImageWrapper;
             
             % Get the histogram equalized image.
-            imageData = wrapper.GetHistogramEqualizedImage();
+            imageData = inputWrapper.GetHistogramEqualizedImage();
             
             % Create an image wrapper object.
-            wrapper = utils.ImageWrapperFactory.create(imageData);
+            outputWrapper = utils.ImageWrapperFactory.create(imageData);
             
             % Update the model.
-            obj.Model.SetOutputWrapper(wrapper);
+            obj.Model.SetOutputWrapper(outputWrapper);
         end
     end
 end
