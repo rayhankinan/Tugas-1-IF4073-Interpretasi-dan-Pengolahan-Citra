@@ -54,6 +54,6 @@ classdef NegativeModel < handle
             % Broadcast the event.
             obj.notify("DataChanged");
             obj.notify("ResultChanged");
-        end % reset
+        end % ResetModel
     end % methods
 end

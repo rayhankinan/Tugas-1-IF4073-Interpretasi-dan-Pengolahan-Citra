@@ -4,6 +4,9 @@ classdef LogTransformationController < components.LogTransformationComponent
     properties (Access = private)
         % Text input for the a and b parameters.
         InputC(1, 1) matlab.ui.control.NumericEditField
+        
+        % Listener object used to respond dynamically to model events.
+        CListener(:, 1) event.listener {mustBeScalarOrEmpty}
     end
     
     methods
@@ -20,6 +23,9 @@ classdef LogTransformationController < components.LogTransformationComponent
             
             % Set any user-specified properties.
             set(obj, namedArgs);
+            
+            % Create a listener for the a parameter.
+            obj.CListener = listener(obj.Model, "CVarChanged", @obj.onCModelChanged);
         end % constructor
     end % methods
     
@@ -31,7 +37,7 @@ classdef LogTransformationController < components.LogTransformationComponent
             g = uigridlayout("Parent", obj, "RowHeight", {"1x", "1x"}, "ColumnWidth", {"1x", "1x"}, "Padding", 0);
             
             % Create input "c" parameter.
-            obj.InputC = uieditfield("numeric", "Parent", g, "Value", 0);
+            obj.InputC = uieditfield("numeric", "Parent", g, "ValueChangedFcn", @obj.onInputCChanged, "Value", obj.Model.C);
             
             % Create execute button.
             uibutton("Parent", g, "Text", "Execute", "ButtonPushedFcn", @obj.onExecuteButtonPushed);
@@ -96,6 +102,20 @@ classdef LogTransformationController < components.LogTransformationComponent
             
             % Update the model.
             obj.Model.SetOutputWrapper(outputWrapper);
+        end
+        
+        function onCModelChanged(obj, ~, ~)
+            %ONCChanged Update the "a" parameter.
+            
+            % Update the input field.
+            set(obj.InputC, "Value", obj.Model.C);
+        end
+        
+        function onInputCChanged(obj, ~, ~)
+            %ONINPUTCCHANGED Update the "a" parameter.
+            
+            % Update the model.
+            obj.Model.SetC(obj.InputC.Value);
         end
     end
 end

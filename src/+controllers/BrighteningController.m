@@ -27,8 +27,8 @@ classdef BrighteningController < components.BrighteningComponent
             set(obj, namedArgs);
             
             % Create a listener for the a parameter.
-            obj.AListener = listener(obj.Model, "AChanged", @obj.onAModelChanged);
-            obj.BListener = listener(obj.Model, "BChanged", @obj.onBModelChanged);
+            obj.AListener = listener(obj.Model, "AVarChanged", @obj.onAModelChanged);
+            obj.BListener = listener(obj.Model, "BVarChanged", @obj.onBModelChanged);
         end % constructor
     end % methods
     

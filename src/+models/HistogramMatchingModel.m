@@ -29,7 +29,7 @@ classdef HistogramMatchingModel < handle
             % Broadcast the event.
             obj.notify("DataChanged");
         end % SetWrapper
-
+        
         function SetReferenceWrapper(obj, imageWrapper)
             arguments
                 obj models.HistogramMatchingModel
@@ -69,6 +69,6 @@ classdef HistogramMatchingModel < handle
             % Broadcast the event.
             obj.notify("DataChanged");
             obj.notify("ResultChanged");
-        end % reset
+        end % ResetModel
     end % methods
 end
