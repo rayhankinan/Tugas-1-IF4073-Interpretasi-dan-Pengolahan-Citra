@@ -21,11 +21,14 @@ classdef LogTransformationController < components.LogTransformationComponent
             % Call the superclass constructor.
             obj@components.LogTransformationComponent(model);
             
+            % Create a listener for the a parameter.
+            obj.CListener = listener(obj.Model, "CVarChanged", @obj.onCModelChanged);
+            
             % Set any user-specified properties.
             set(obj, namedArgs);
             
-            % Create a listener for the a parameter.
-            obj.CListener = listener(obj.Model, "CVarChanged", @obj.onCModelChanged);
+            % Refresh the view.
+            obj.onCModelChanged();
         end % constructor
     end % methods
     
@@ -37,7 +40,7 @@ classdef LogTransformationController < components.LogTransformationComponent
             g = uigridlayout("Parent", obj, "RowHeight", {"1x", "1x"}, "ColumnWidth", {"1x", "1x"}, "Padding", 0);
             
             % Create input "c" parameter.
-            obj.InputC = uieditfield("numeric", "Parent", g, "ValueChangedFcn", @obj.onInputCChanged, "Value", obj.Model.C);
+            obj.InputC = uieditfield("numeric", "Parent", g, "ValueChangedFcn", @obj.onInputCChanged);
             
             % Create execute button.
             uibutton("Parent", g, "Text", "Execute", "ButtonPushedFcn", @obj.onExecuteButtonPushed);
@@ -95,7 +98,7 @@ classdef LogTransformationController < components.LogTransformationComponent
             inputWrapper = obj.Model.InputImageWrapper;
             
             % Get the log transformed image data.
-            imageData = inputWrapper.GetLogTransformation(obj.InputC.Value);
+            imageData = inputWrapper.GetLogTransformation(obj.Model.C);
             
             % Create an image wrapper object.
             outputWrapper = utils.ImageWrapperFactory.create(imageData);

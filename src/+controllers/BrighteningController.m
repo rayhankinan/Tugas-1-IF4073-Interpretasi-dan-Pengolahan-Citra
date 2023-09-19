@@ -23,12 +23,16 @@ classdef BrighteningController < components.BrighteningComponent
             % Call the superclass constructor.
             obj@components.BrighteningComponent(model);
             
-            % Set any user-specified properties.
-            set(obj, namedArgs);
-            
             % Create a listener for the a parameter.
             obj.AListener = listener(obj.Model, "AVarChanged", @obj.onAModelChanged);
             obj.BListener = listener(obj.Model, "BVarChanged", @obj.onBModelChanged);
+            
+            % Set any user-specified properties.
+            set(obj, namedArgs);
+            
+            % Refresh the view.
+            obj.onAModelChanged();
+            obj.onBModelChanged();
         end % constructor
     end % methods
     
@@ -40,10 +44,10 @@ classdef BrighteningController < components.BrighteningComponent
             g = uigridlayout("Parent", obj, "RowHeight", {"1x", "1x"}, "ColumnWidth", {"1x", "1x", "1x"}, "Padding", 0);
             
             % Create input "a" parameter.
-            obj.InputA = uieditfield("numeric", "Parent", g, "ValueChangedFcn", @obj.onInputAChanged, "Value", obj.Model.A);
+            obj.InputA = uieditfield("numeric", "Parent", g, "ValueChangedFcn", @obj.onInputAChanged);
             
             % Create input "b" parameter.
-            obj.InputB = uieditfield("numeric", "Parent", g, "ValueChangedFcn", @obj.onInputBChanged, "Value", obj.Model.B);
+            obj.InputB = uieditfield("numeric", "Parent", g, "ValueChangedFcn", @obj.onInputBChanged);
             
             % Create execute button.
             uibutton("Parent", g, "Text", "Execute", "ButtonPushedFcn", @obj.onExecuteButtonPushed);

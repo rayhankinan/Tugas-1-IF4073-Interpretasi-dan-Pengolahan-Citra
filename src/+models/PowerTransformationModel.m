@@ -5,6 +5,8 @@ classdef PowerTransformationModel < handle
         % Application data.
         InputImageWrapper(1, 1) wrappers.BaseImageWrapper = wrappers.GrayscaleImageWrapper([]) % Empty image.
         OutputImageWrapper(1, 1) wrappers.BaseImageWrapper = wrappers.GrayscaleImageWrapper([]) % Empty image.
+        C(1, 1) double = 1
+        Gamma(1, 1) double = 1
     end % properties (SetAccess = private)
     
     events (NotifyAccess = private)
