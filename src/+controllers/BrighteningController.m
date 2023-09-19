@@ -5,6 +5,10 @@ classdef BrighteningController < components.BrighteningComponent
         % Text input for the a and b parameters.
         InputA(1, 1) matlab.ui.control.NumericEditField
         InputB(1, 1) matlab.ui.control.NumericEditField
+        
+        % Listener object used to respond dynamically to model events.
+        AListener(:, 1) event.listener {mustBeScalarOrEmpty}
+        BListener(:, 1) event.listener {mustBeScalarOrEmpty}
     end
     
     methods
@@ -21,6 +25,10 @@ classdef BrighteningController < components.BrighteningComponent
             
             % Set any user-specified properties.
             set(obj, namedArgs);
+            
+            % Create a listener for the a parameter.
+            obj.AListener = listener(obj.Model, "AChanged", @obj.onAModelChanged);
+            obj.BListener = listener(obj.Model, "BChanged", @obj.onBModelChanged);
         end % constructor
     end % methods
     
@@ -32,10 +40,10 @@ classdef BrighteningController < components.BrighteningComponent
             g = uigridlayout("Parent", obj, "RowHeight", {"1x", "1x"}, "ColumnWidth", {"1x", "1x", "1x"}, "Padding", 0);
             
             % Create input "a" parameter.
-            obj.InputA = uieditfield("numeric", "Parent", g, "Value", 0);
+            obj.InputA = uieditfield("numeric", "Parent", g, "ValueChangedFcn", @obj.onInputAChanged, "Value", obj.Model.A);
             
             % Create input "b" parameter.
-            obj.InputB = uieditfield("numeric", "Parent", g, "Value", 0);
+            obj.InputB = uieditfield("numeric", "Parent", g, "ValueChangedFcn", @obj.onInputBChanged, "Value", obj.Model.B);
             
             % Create execute button.
             uibutton("Parent", g, "Text", "Execute", "ButtonPushedFcn", @obj.onExecuteButtonPushed);
@@ -93,13 +101,41 @@ classdef BrighteningController < components.BrighteningComponent
             inputWrapper = obj.Model.InputImageWrapper;
             
             % Get the brightened image data.
-            imageData = inputWrapper.GetBrightening(obj.InputA.Value, obj.InputB.Value);
+            imageData = inputWrapper.GetBrightening(obj.Model.A, obj.Model.B);
             
             % Create an image wrapper object.
             outputWrapper = utils.ImageWrapperFactory.create(imageData);
             
             % Update the model.
             obj.Model.SetOutputWrapper(outputWrapper);
+        end
+        
+        function onAModelChanged(obj, ~, ~)
+            %ONAChanged Update the "a" parameter.
+            
+            % Update the input field.
+            set(obj.InputA, "Value", obj.Model.A);
+        end
+        
+        function onBModelChanged(obj, ~, ~)
+            % ONBChanged Update the "b" parameter.
+            
+            % Update the input field.
+            set(obj.InputB, "Value", obj.Model.B);
+        end
+        
+        function onInputAChanged(obj, ~, ~)
+            %ONINPUTACHANGED Update the "a" parameter.
+            
+            % Update the model.
+            obj.Model.SetA(obj.InputA.Value);
+        end
+        
+        function onInputBChanged(obj, ~, ~)
+            %ONINPUTBCHANGED Update the "b" parameter.
+            
+            % Update the model.
+            obj.Model.SetB(obj.InputB.Value);
         end
     end
 end
