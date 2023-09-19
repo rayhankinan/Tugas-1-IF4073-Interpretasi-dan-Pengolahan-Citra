@@ -54,7 +54,7 @@ classdef GrayscaleImageWrapper < wrappers.BaseImageWrapper
                 obj wrappers.GrayscaleImageWrapper
             end
             
-            imageData = histeq(obj.ImageData);
+            imageData = utils.Histogram.histeq(obj.ImageData);
         end
         
         % Get Histogram Specification Image

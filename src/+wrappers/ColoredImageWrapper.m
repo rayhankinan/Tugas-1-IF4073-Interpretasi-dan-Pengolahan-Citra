@@ -54,7 +54,12 @@ classdef ColoredImageWrapper < wrappers.BaseImageWrapper
                 obj wrappers.ColoredImageWrapper
             end
             
-            imageData = histeq(obj.ImageData);
+            % Equalize the histogram for each channel
+            redChan = utils.Histogram.histeq(obj.ImageData(:, :, 1));
+            greenChan = utils.Histogram.histeq(obj.ImageData(:, :, 2));
+            blueChan = utils.Histogram.histeq(obj.ImageData(:, :, 3));
+
+            imageData = cat(3, redChan, greenChan, blueChan);
         end
         
         % Get Histogram Specification Image
