@@ -51,13 +51,15 @@ classdef Histogram
             end
             
             % Compute new image data
-            newImageData = zeros(m, n, 'uint8');
+            doubleImageData = zeros(m, n, 'double');
             for i = 1:m
                 for j = 1:n
                     val = imageData(i, j);
-                    newImageData(i, j) = uint8(255 * cumulativeProbabilities(val + 1));
+                    doubleImageData(i, j) = cumulativeProbabilities(val + 1);
                 end
             end
+            
+            newImageData = im2uint8(doubleImageData);
         end
     end
 end
