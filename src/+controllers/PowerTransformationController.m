@@ -5,6 +5,10 @@ classdef PowerTransformationController < components.PowerTransformationComponent
         % Text input for the a and b parameters.
         InputC(1, 1) matlab.ui.control.NumericEditField
         InputGamma(1, 1) matlab.ui.control.NumericEditField
+        
+        % Listener object used to respond dynamically to model events.
+        CListener(:, 1) event.listener
+        GammaListener(:, 1) event.listener
     end
     
     methods
@@ -19,8 +23,16 @@ classdef PowerTransformationController < components.PowerTransformationComponent
             % Call the superclass constructor.
             obj@components.PowerTransformationComponent(model);
             
+            % Create a listener for the a parameter.
+            obj.CListener = listener(obj.Model, "CVarChanged", @obj.onCModelChanged);
+            obj.GammaListener = listener(obj.Model, "GammaVarChanged", @obj.onGammaModelChanged);
+            
             % Set any user-specified properties.
             set(obj, namedArgs);
+            
+            % Update the view.
+            obj.onCModelChanged();
+            obj.onGammaModelChanged();
         end % constructor
     end % methods
     
@@ -32,10 +44,10 @@ classdef PowerTransformationController < components.PowerTransformationComponent
             g = uigridlayout("Parent", obj, "RowHeight", {"1x", "1x"}, "ColumnWidth", {"1x", "1x", "1x"}, "Padding", 0);
             
             % Create input "a" parameter.
-            obj.InputC = uieditfield("numeric", "Parent", g, "Value", 0);
+            obj.InputC = uieditfield("numeric", "Parent", g,"ValueChangedFcn", @obj.onInputCChanged);
             
             % Create input "b" parameter.
-            obj.InputGamma = uieditfield("numeric", "Parent", g, "Value", 0);
+            obj.InputGamma = uieditfield("numeric", "Parent", g, "ValueChangedFcn", @obj.onInputGammaChanged);
             
             % Create execute button.
             uibutton("Parent", g, "Text", "Execute", "ButtonPushedFcn", @obj.onExecuteButtonPushed);
@@ -93,13 +105,41 @@ classdef PowerTransformationController < components.PowerTransformationComponent
             inputWrapper = obj.Model.InputImageWrapper;
             
             % Get the brightened image data.
-            imageData = inputWrapper.GetPowerTransformation(obj.InputC.Value, obj.InputGamma.Value);
+            imageData = inputWrapper.GetPowerTransformation(obj.Model.C, obj.Model.Gamma);
             
             % Create an image wrapper object.
             outputWrapper = utils.ImageWrapperFactory.create(imageData);
             
             % Update the model.
             obj.Model.SetOutputWrapper(outputWrapper);
+        end
+        
+        function onCModelChanged(obj, ~, ~)
+            %ONCMODELCHANGED Update the "c" input field.
+            
+            % Update the input field.
+            set(obj.InputC, "Value", obj.Model.C);
+        end
+        
+        function onGammaModelChanged(obj, ~, ~)
+            %ONGAMMAMODELCHANGED Update the "gamma" input field.
+            
+            % Update the input field.
+            set(obj.InputGamma, "Value", obj.Model.Gamma);
+        end
+        
+        function onInputCChanged(obj, ~, ~)
+            %ONINPUTCCHANGED Update the "c" parameter.
+            
+            % Update the model.
+            obj.Model.SetC(obj.InputC.Value);
+        end
+        
+        function onInputGammaChanged(obj, ~, ~)
+            %ONINPUTGAMMACHANGED Update the "gamma" parameter.
+            
+            % Update the model.
+            obj.Model.SetGamma(obj.InputGamma.Value);
         end
     end
 end

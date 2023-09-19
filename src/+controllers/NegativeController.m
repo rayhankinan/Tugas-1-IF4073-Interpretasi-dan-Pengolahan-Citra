@@ -1,12 +1,6 @@
 classdef NegativeController < components.NegativeComponent
     %CONTROLLER Provides an interactive control to generate new data.
     
-    properties (Access = private)
-        % Text input for the a and b parameters.
-        InputA(1, 1) matlab.ui.control.NumericEditField
-        InputB(1, 1) matlab.ui.control.NumericEditField
-    end
-    
     methods
         function obj = NegativeController(model, namedArgs)
             % CONTROLLER Controller constructor.

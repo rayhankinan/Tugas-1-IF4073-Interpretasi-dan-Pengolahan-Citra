@@ -5,8 +5,8 @@ classdef BrighteningModel < handle
         % Application data.
         InputImageWrapper(1, 1) wrappers.BaseImageWrapper = wrappers.GrayscaleImageWrapper([]) % Empty image.
         OutputImageWrapper(1, 1) wrappers.BaseImageWrapper = wrappers.GrayscaleImageWrapper([]) % Empty image.
-        A double = 0 % Brightening factor.
-        B double = 0 % Brightening bias.
+        A(1, 1) double = 1 % Brightening factor.
+        B(1, 1) double = 0 % Brightening bias.
     end % properties (SetAccess = private)
     
     events (NotifyAccess = private)
@@ -17,8 +17,8 @@ classdef BrighteningModel < handle
         ResultChanged
         
         % Event broadcast when the parameter is changed.
-        AChanged
-        BChanged
+        AVarChanged
+        BVarChanged
     end % events (NotifyAccess = private)
     
     methods
@@ -51,27 +51,27 @@ classdef BrighteningModel < handle
         function SetA(obj, A)
             arguments
                 obj models.BrighteningModel
-                A double
+                A(1, 1) double
             end
             
             % Set the parameter.
             obj.A = A;
             
             % Broadcast the event.
-            obj.notify("AChanged");
+            obj.notify("AVarChanged");
         end % SetA
         
         function SetB(obj, B)
             arguments
                 obj models.BrighteningModel
-                B double
+                B(1, 1) double
             end
             
             % Set the parameter.
             obj.B = B;
             
             % Broadcast the event.
-            obj.notify("BChanged");
+            obj.notify("BVarChanged");
         end % SetB
         
         function ResetModel(obj)
@@ -82,10 +82,14 @@ classdef BrighteningModel < handle
             % Reset the image wrapper.
             obj.InputImageWrapper = wrappers.GrayscaleImageWrapper([]); % Empty image.
             obj.OutputImageWrapper = wrappers.GrayscaleImageWrapper([]); % Empty image.
+            obj.A = 1; % Brightening factor.
+            obj.B = 0; % Brightening bias.
             
             % Broadcast the event.
             obj.notify("DataChanged");
             obj.notify("ResultChanged");
-        end % reset
+            obj.notify("AVarChanged");
+            obj.notify("BVarChanged");
+        end % ResetModel
     end % methods
 end % classdef

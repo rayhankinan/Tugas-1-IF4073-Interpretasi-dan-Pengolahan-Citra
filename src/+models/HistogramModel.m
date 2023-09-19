@@ -35,6 +35,6 @@ classdef HistogramModel < handle
             
             % Broadcast the event.
             obj.notify("DataChanged");
-        end % reset
+        end % ResetModel
     end % methods
 end % classdef
