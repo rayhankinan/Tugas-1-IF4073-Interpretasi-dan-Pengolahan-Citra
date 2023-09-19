@@ -70,7 +70,7 @@ classdef GrayscaleImageWrapper < wrappers.BaseImageWrapper
         % Get Image Brightening
         function imageData = GetBrightening(obj, a, b)
             arguments
-                obj wrappers.ColoredImageWrapper
+                obj wrappers.GrayscaleImageWrapper
                 a double;
                 b double;
             end
@@ -81,7 +81,7 @@ classdef GrayscaleImageWrapper < wrappers.BaseImageWrapper
         % Get Negative Image
         function imageData = GetNegative(obj)
             arguments
-                obj wrappers.ColoredImageWrapper
+                obj wrappers.GrayscaleImageWrapper
             end
             
             imageData = 255 - obj.ImageData;
@@ -90,7 +90,7 @@ classdef GrayscaleImageWrapper < wrappers.BaseImageWrapper
         % Get Log Transformation
         function imageData = GetLogTransformation(obj, c)
             arguments
-                obj wrappers.ColoredImageWrapper
+                obj wrappers.GrayscaleImageWrapper
                 c double;
             end
             
@@ -100,7 +100,7 @@ classdef GrayscaleImageWrapper < wrappers.BaseImageWrapper
         % Get Power Law Transformation
         function imageData = GetPowerLawTransformation(obj, c, gamma)
             arguments
-                obj wrappers.ColoredImageWrapper
+                obj wrappers.GrayscaleImageWrapper
                 c double;
                 gamma double;
             end
