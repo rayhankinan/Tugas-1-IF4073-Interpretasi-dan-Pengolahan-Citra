@@ -49,22 +49,22 @@ classdef GrayscaleImageWrapper < wrappers.BaseImageWrapper
         end
         
         % Get Histogram Equalized Image
-        function result = GetHistogramEqualizedImage(obj)
+        function imageData = GetHistogramEqualizedImage(obj)
             arguments
                 obj wrappers.GrayscaleImageWrapper
             end
             
-            result = histeq(obj.ImageData);
+            imageData = histeq(obj.ImageData);
         end
         
         % Get Histogram Specification Image
-        function result = GetHistogramSpecificationImage(obj, target)
+        function imageData = GetHistogramSpecificationImage(obj, target)
             arguments
                 obj wrappers.GrayscaleImageWrapper
                 target wrappers.GrayscaleImageWrapper
             end
             
-            result = histeq(obj.ImageData, target.ImageData);
+            imageData = histeq(obj.ImageData, target.ImageData);
         end
         
         % Get Image Brightening

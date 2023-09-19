@@ -49,22 +49,22 @@ classdef ColoredImageWrapper < wrappers.BaseImageWrapper
         end
         
         % Get Histogram Equalized Image
-        function result = GetHistogramEqualizedImage(obj)
+        function imageData = GetHistogramEqualizedImage(obj)
             arguments
                 obj wrappers.ColoredImageWrapper
             end
             
-            result = histeq(obj.ImageData);
+            imageData = histeq(obj.ImageData);
         end
         
         % Get Histogram Specification Image
-        function result = GetHistogramSpecificationImage(obj, target)
+        function imageData = GetHistogramSpecificationImage(obj, target)
             arguments
                 obj wrappers.ColoredImageWrapper
                 target wrappers.ColoredImageWrapper
             end
             
-            result = histeq(obj.ImageData, target.ImageData);
+            imageData = histeq(obj.ImageData, target.ImageData);
         end
         
         % Get Image Brightening
