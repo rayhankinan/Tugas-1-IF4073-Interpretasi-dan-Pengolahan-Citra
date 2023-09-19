@@ -7,6 +7,7 @@ classdef AppLayout < matlab.ui.componentcontainer.ComponentContainer
         LogTransformation pages.LogTransformationPage
         PowerTransformation pages.PowerTransformationPage
         HistogramEqualization pages.HistogramEqualizationPage
+        HistogramMatching pages.HistogramMatchingPage
         
         % Key to the current page.
         CurrentPageKey string
@@ -49,12 +50,13 @@ classdef AppLayout < matlab.ui.componentcontainer.ComponentContainer
             obj.LogTransformation = pages.LogTransformationPage("Parent", pagePanel, "Visible", "Off");
             obj.PowerTransformation = pages.PowerTransformationPage("Parent", pagePanel, "Visible", "Off");
             obj.HistogramEqualization = pages.HistogramEqualizationPage("Parent", pagePanel, "Visible", "Off");
+            obj.HistogramMatching = pages.HistogramMatchingPage("Parent", pagePanel, "Visible", "Off");
             
             % Set the current page.
             obj.CurrentPageKey = "Histogram";
             
             % Fill the drop-down menu with the page names.
-            obj.DropDown = uidropdown("Parent", dropdownPanel, "Items", ["Histogram" "Brightening" "Negative" "LogTransformation" "PowerTransformation" "HistogramEqualization"], "Value", obj.CurrentPageKey, "ValueChangedFcn", @obj.onDropDownValueChanged);
+            obj.DropDown = uidropdown("Parent", dropdownPanel, "Items", ["Histogram" "Brightening" "Negative" "LogTransformation" "PowerTransformation" "HistogramEqualization" "HistogramMatching"], "Value", obj.CurrentPageKey, "ValueChangedFcn", @obj.onDropDownValueChanged);
         end % setup
         
         function update(~)
