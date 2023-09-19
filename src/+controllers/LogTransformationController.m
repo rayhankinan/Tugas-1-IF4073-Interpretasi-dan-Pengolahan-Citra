@@ -108,14 +108,14 @@ classdef LogTransformationController < components.LogTransformationComponent
         end
         
         function onCModelChanged(obj, ~, ~)
-            %ONCChanged Update the "a" parameter.
+            %ONCMODELCHANGED Update the "c" input field.
             
             % Update the input field.
             set(obj.InputC, "Value", obj.Model.C);
         end
         
         function onInputCChanged(obj, ~, ~)
-            %ONINPUTCCHANGED Update the "a" parameter.
+            %ONINPUTCCHANGED Update the "c" parameter.
             
             % Update the model.
             obj.Model.SetC(obj.InputC.Value);

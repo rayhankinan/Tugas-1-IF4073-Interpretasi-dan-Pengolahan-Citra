@@ -115,14 +115,14 @@ classdef BrighteningController < components.BrighteningComponent
         end
         
         function onAModelChanged(obj, ~, ~)
-            %ONAChanged Update the "a" parameter.
+            %ONAMODELCHANGED Update the "a" input field.
             
             % Update the input field.
             set(obj.InputA, "Value", obj.Model.A);
         end
         
         function onBModelChanged(obj, ~, ~)
-            % ONBChanged Update the "b" parameter.
+            % ONBMODELCHANGED Update the "b" input field.
             
             % Update the input field.
             set(obj.InputB, "Value", obj.Model.B);
