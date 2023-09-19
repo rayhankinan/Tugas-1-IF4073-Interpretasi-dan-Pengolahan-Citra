@@ -75,6 +75,11 @@ classdef GrayscaleImageWrapper < wrappers.BaseImageWrapper
             end
         end
         
+        % Get Histogram Stretched
+        function imageData = GetHistogramStretchedImage(obj)
+            imageData = utils.Histogram.histstretch(obj.ImageData);
+        end
+        
         % Get Image Brightening
         function imageData = GetBrightening(obj, a, b)
             arguments

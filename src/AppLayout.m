@@ -6,6 +6,7 @@ classdef AppLayout < matlab.ui.componentcontainer.ComponentContainer
         Negative(1, 1) pages.NegativePage
         LogTransformation(1, 1) pages.LogTransformationPage
         PowerTransformation(1, 1) pages.PowerTransformationPage
+        HistogramStretching(1, 1) pages.HistogramStretchingPage
         HistogramEqualization(1, 1) pages.HistogramEqualizationPage
         HistogramMatching(1, 1) pages.HistogramMatchingPage
         
@@ -53,16 +54,17 @@ classdef AppLayout < matlab.ui.componentcontainer.ComponentContainer
             pagePanel = uipanel("Parent", g, "Position", [0, 0, 50, 50]);
             
             % Populate the pages.
-            obj.Histogram = pages.HistogramPage("Parent", pagePanel, "Visible", "On");
+            obj.Histogram = pages.HistogramPage("Parent", pagePanel, "Visible", "Off");
             obj.Brightening = pages.BrighteningPage("Parent", pagePanel, "Visible", "Off");
             obj.Negative = pages.NegativePage("Parent", pagePanel, "Visible", "Off");
             obj.LogTransformation = pages.LogTransformationPage("Parent", pagePanel, "Visible", "Off");
             obj.PowerTransformation = pages.PowerTransformationPage("Parent", pagePanel, "Visible", "Off");
+            obj.HistogramStretching = pages.HistogramStretchingPage("Parent", pagePanel, "Visible", "Off");
             obj.HistogramEqualization = pages.HistogramEqualizationPage("Parent", pagePanel, "Visible", "Off");
             obj.HistogramMatching = pages.HistogramMatchingPage("Parent", pagePanel, "Visible", "Off");
             
             % Fill the drop-down menu with the page names.
-            obj.DropDown = uidropdown("Parent", dropdownPanel, "Items", ["Histogram" "Brightening" "Negative" "LogTransformation" "PowerTransformation" "HistogramEqualization" "HistogramMatching"], "ValueChangedFcn", @obj.onDropDownValueChanged);
+            obj.DropDown = uidropdown("Parent", dropdownPanel, "Items", ["Histogram" "Brightening" "Negative" "LogTransformation" "PowerTransformation" "HistogramStretching" "HistogramEqualization" "HistogramMatching"], "ValueChangedFcn", @obj.onDropDownValueChanged);
         end % setup
         
         function update(~)

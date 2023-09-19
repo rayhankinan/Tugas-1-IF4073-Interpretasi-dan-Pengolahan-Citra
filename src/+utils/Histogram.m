@@ -18,9 +18,9 @@ classdef Histogram
                     histogram(val + 1) = histogram(val + 1) + 1;
                 end
             end
-        end
+        end % hist
         
-        function newImageData = histeq(imageData)
+        function newData = histeq(imageData)
             arguments
                 imageData uint8
             end %arguments
@@ -60,10 +60,10 @@ classdef Histogram
             end
             
             % Convert to uint8
-            newImageData = im2uint8(doubleImageData);
-        end
+            newData = im2uint8(doubleImageData);
+        end % histeq
         
-        function newImageData = histmatch(inputData, referenceData)
+        function newData = histmatch(inputData, referenceData)
             arguments
                 inputData uint8
                 referenceData uint8
@@ -130,13 +130,6 @@ classdef Histogram
                 end
             end
             
-            % % Find the corresponding map for each possible grayscale (refered from internet)
-            % % value
-            % referenceMap = zeros(1, 256, 'uint8');
-            % for i = 1:256
-            %     referenceMap(i) = uint8(round(cumulativeReferenceProbabilities(i) * 255));
-            % end
-            
             % Create inverse mapping (refered from ppt)
             inverseMap = zeros(1, 256, 'uint8');
             for i = 1:256
@@ -156,12 +149,30 @@ classdef Histogram
             
             % Generate image data
             [m, n] = size(inputData);
-            newImageData = zeros(m, n, 'uint8');
+            newData = zeros(m, n, 'uint8');
             for i = 1:m
                 for j = 1:n
-                    newImageData(i, j) = inverseMap(inputMap(inputData(i, j) + 1) + 1);
+                    newData(i, j) = inverseMap(inputMap(inputData(i, j) + 1) + 1);
                 end
             end
+        end % histmatch
+        
+        function newData = histstretch(inputData)
+            arguments
+                inputData uint8
+            end %arguments
+            
+            doubleInputData = im2double(inputData);
+            
+            % Find the minimum and maximum value
+            minVal = min(min(doubleInputData));
+            maxVal = max(max(doubleInputData));
+            
+            % Compute new image data
+            doubleNewData = (doubleInputData - minVal) / (maxVal - minVal);
+            
+            % Convert to uint8
+            newData = im2uint8(doubleNewData);
         end
-    end
-end
+    end % methods
+end % classdef

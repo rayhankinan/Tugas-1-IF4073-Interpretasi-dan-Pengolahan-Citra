@@ -84,6 +84,20 @@ classdef ColoredImageWrapper < wrappers.BaseImageWrapper
             end
         end
         
+        % Get Histogram Stretched
+        function imageData = GetHistogramStretchedImage(obj)
+            arguments
+                obj wrappers.ColoredImageWrapper
+            end
+            
+            % Stretch the histogram for each channel
+            redChan = utils.Histogram.histstretch(obj.ImageData(:, :, 1));
+            greenChan = utils.Histogram.histstretch(obj.ImageData(:, :, 2));
+            blueChan = utils.Histogram.histstretch(obj.ImageData(:, :, 3));
+            
+            imageData = cat(3, redChan, greenChan, blueChan);
+        end
+        
         % Get Image Brightening
         function imageData = GetBrightening(obj, a, b)
             arguments

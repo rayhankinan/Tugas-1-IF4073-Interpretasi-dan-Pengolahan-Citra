@@ -23,6 +23,9 @@ classdef (Abstract) BaseImageWrapper
         % Get Histogram Specification
         GetHistogramSpecificationImage(obj, target)
         
+        % Get Histogram Stretched
+        GetHistogramStretchedImage(obj)
+        
         % Get Image Brightening
         GetBrightening(obj, a, b)
         
