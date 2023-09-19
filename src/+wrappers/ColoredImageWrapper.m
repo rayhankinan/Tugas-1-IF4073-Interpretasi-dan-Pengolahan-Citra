@@ -43,9 +43,9 @@ classdef ColoredImageWrapper < wrappers.BaseImageWrapper
                 obj wrappers.ColoredImageWrapper
             end
             
-            histRed = imhist(obj.ImageData(:, :, 1));
-            histGreen = imhist(obj.ImageData(:, :, 2));
-            histBlue = imhist(obj.ImageData(:, :, 3));
+            histRed = utils.Histogram.hist(obj.ImageData(:, :, 1));
+            histGreen = utils.Histogram.hist(obj.ImageData(:, :, 2));
+            histBlue = utils.Histogram.hist(obj.ImageData(:, :, 3));
         end
         
         % Get Histogram Equalized Image

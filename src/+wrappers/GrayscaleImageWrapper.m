@@ -43,9 +43,9 @@ classdef GrayscaleImageWrapper < wrappers.BaseImageWrapper
                 obj wrappers.GrayscaleImageWrapper
             end
             
-            histRed = imhist(obj.ImageData);
-            histBlue = imhist(obj.ImageData);
-            histGreen = imhist(obj.ImageData);
+            histRed = utils.Histogram.hist(obj.ImageData);
+            histBlue = utils.Histogram.hist(obj.ImageData);
+            histGreen = utils.Histogram.hist(obj.ImageData);
         end
         
         % Get Histogram Equalized Image
