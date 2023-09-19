@@ -33,6 +33,6 @@ classdef (Abstract) BaseImageWrapper
         GetLogTransformation(obj, c)
         
         % Get Power Law Transformation
-        GetPowerLawTransformation(obj, c, gamma)
+        GetPowerTransformation(obj, c, gamma)
     end
 end

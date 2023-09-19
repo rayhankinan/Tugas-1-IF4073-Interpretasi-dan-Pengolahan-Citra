@@ -107,7 +107,7 @@ classdef ColoredImageWrapper < wrappers.BaseImageWrapper
         end
         
         % Get Power Law Transformation
-        function imageData = GetPowerLawTransformation(obj, c, gamma)
+        function imageData = GetPowerTransformation(obj, c, gamma)
             arguments
                 obj wrappers.ColoredImageWrapper
                 c double;

@@ -59,6 +59,7 @@ classdef Histogram
                 end
             end
             
+            % Convert to uint8
             newImageData = im2uint8(doubleImageData);
         end
     end
