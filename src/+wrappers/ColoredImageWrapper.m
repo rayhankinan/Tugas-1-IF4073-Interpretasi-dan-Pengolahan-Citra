@@ -43,35 +43,28 @@ classdef ColoredImageWrapper < wrappers.BaseImageWrapper
                 obj wrappers.ColoredImageWrapper
             end
             
-            % TODO: Ubah ini dengan fungsi buatan sendiri
             histRed = imhist(obj.ImageData(:, :, 1));
             histGreen = imhist(obj.ImageData(:, :, 2));
             histBlue = imhist(obj.ImageData(:, :, 3));
         end
         
-        % Get Histogram Equalized
-        function [histRed, histGreen, histBlue] = GetHistogramEqualized(obj)
+        % Get Histogram Equalized Image
+        function result = GetHistogramEqualizedImage(obj)
             arguments
                 obj wrappers.ColoredImageWrapper
             end
             
-            % TODO: Ubah ini dengan fungsi buatan sendiri
-            histRed = histeq(obj.ImageData(:, :, 1));
-            histGreen = histeq(obj.ImageData(:, :, 2));
-            histBlue = histeq(obj.ImageData(:, :, 3));
+            result = histeq(obj.ImageData);
         end
         
-        % Get Histogram Specification
-        function [histRed, histGreen, histBlue] = GetHistogramSpecification(obj, target)
+        % Get Histogram Specification Image
+        function result = GetHistogramSpecificationImage(obj, target)
             arguments
                 obj wrappers.ColoredImageWrapper
                 target wrappers.ColoredImageWrapper
             end
             
-            % TODO: Ubah ini dengan fungsi buatan sendiri
-            histRed = histeq(obj.ImageData(:, :, 1), target.ImageData(:, :, 1));
-            histGreen = histeq(obj.ImageData(:, :, 2), target.ImageData(:, :, 2));
-            histBlue = histeq(obj.ImageData(:, :, 3), target.ImageData(:, :, 3));
+            result = histeq(obj.ImageData, target.ImageData);
         end
         
         % Get Image Brightening

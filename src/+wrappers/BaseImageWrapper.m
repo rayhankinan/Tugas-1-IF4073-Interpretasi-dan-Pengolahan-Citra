@@ -18,10 +18,10 @@ classdef (Abstract) BaseImageWrapper
         GetHistogram(obj)
         
         % Get Histogram Equalized
-        GetHistogramEqualized(obj)
+        GetHistogramEqualizedImage(obj)
         
         % Get Histogram Specification
-        GetHistogramSpecification(obj, target)
+        GetHistogramSpecificationImage(obj, target)
         
         % Get Image Brightening
         GetBrightening(obj, a, b)

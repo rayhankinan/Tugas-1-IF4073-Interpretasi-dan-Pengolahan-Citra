@@ -48,28 +48,23 @@ classdef GrayscaleImageWrapper < wrappers.BaseImageWrapper
             histGreen = imhist(obj.ImageData);
         end
         
-        % Get Histogram Equalized
-        function [histRed, histGreen, histBlue] = GetHistogramEqualized(obj)
+        % Get Histogram Equalized Image
+        function result = GetHistogramEqualizedImage(obj)
             arguments
                 obj wrappers.GrayscaleImageWrapper
             end
             
-            histRed = histeq(obj.ImageData);
-            histBlue = histeq(obj.ImageData);
-            histGreen = histeq(obj.ImageData);
+            result = histeq(obj.ImageData);
         end
         
-        % Get Histogram Specification
-        function [histRed, histGreen, histBlue] = GetHistogramSpecification(obj, target)
+        % Get Histogram Specification Image
+        function result = GetHistogramSpecificationImage(obj, target)
             arguments
                 obj wrappers.GrayscaleImageWrapper
                 target wrappers.GrayscaleImageWrapper
             end
             
-            % TODO: Ubah ini dengan fungsi buatan sendiri
-            histRed = histeq(obj.ImageData, target.ImageData);
-            histBlue = histeq(obj.ImageData, target.ImageData);
-            histGreen = histeq(obj.ImageData, target.ImageData);
+            result = histeq(obj.ImageData, target.ImageData);
         end
         
         % Get Image Brightening
