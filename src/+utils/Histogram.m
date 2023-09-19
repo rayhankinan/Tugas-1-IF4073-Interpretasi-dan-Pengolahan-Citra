@@ -62,13 +62,13 @@ classdef Histogram
             % Convert to uint8
             newImageData = im2uint8(doubleImageData);
         end
-
+        
         function newImageData = histmatch(inputData, referenceData)
             arguments
                 inputData uint8
                 referenceData uint8
             end %arguments
-
+            
             % Process inputData
             
             % Compute histogram value
@@ -95,14 +95,14 @@ classdef Histogram
                     cumulativeInputProbabilities(i) = cumulativeInputProbabilities(i - 1) + inputProbabilities(i);
                 end
             end
-
+            
             % Find the corresponding map for each possible grayscale
             % value
             inputMap = zeros(1, 256, 'uint8');
             for i = 1:256
                 inputMap(i) = uint8(round(cumulativeInputProbabilities(i) * 255));
             end
-
+            
             % Process referenceData
             
             % Compute histogram value
@@ -129,30 +129,31 @@ classdef Histogram
                     cumulativeReferenceProbabilities(i) = cumulativeReferenceProbabilities(i - 1) + referenceProbabilities(i);
                 end
             end
-
-            % Find the corresponding map for each possible grayscale
-            % value
-            referenceMap = zeros(1, 256, 'uint8');
-            for i = 1:256
-                referenceMap(i) = uint8(round(cumulativeReferenceProbabilities(i) * 255));
-            end
-
-            % Create inverse mapping
+            
+            % % Find the corresponding map for each possible grayscale (refered from internet)
+            % % value
+            % referenceMap = zeros(1, 256, 'uint8');
+            % for i = 1:256
+            %     referenceMap(i) = uint8(round(cumulativeReferenceProbabilities(i) * 255));
+            % end
+            
+            % Create inverse mapping (refered from ppt)
             inverseMap = zeros(1, 256, 'uint8');
             for i = 1:256
                 s = inputMap(i);
                 currMin = abs(s - cumulativeReferenceProbabilities(1) * 255);
                 currMinIdx = 1;
+                
                 for j = 1:256
                     if abs(s - cumulativeReferenceProbabilities(j) * 255) < currMin
                         currMin = abs(s - cumulativeReferenceProbabilities(j) * 255);
                         currMinIdx = j;
                     end
                 end
-
+                
                 inverseMap(i) = currMinIdx;
             end
-
+            
             % Generate image data
             [m, n] = size(inputData);
             newImageData = zeros(m, n, 'uint8');
