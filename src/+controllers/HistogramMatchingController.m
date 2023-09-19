@@ -112,9 +112,10 @@ classdef HistogramMatchingController < components.HistogramMatchingComponent
             
             % Get wrapper
             inputWrapper = obj.Model.InputImageWrapper;
+            referenceWrapper = obj.Model.ReferenceImageWrapper;
             
             % Get the histogram equalized image.
-            imageData = inputWrapper.GetHistogramEqualizedImage();
+            imageData = inputWrapper.GetHistogramSpecificationImage(referenceWrapper);
             
             % Create an image wrapper object.
             outputWrapper = utils.ImageWrapperFactory.create(imageData);

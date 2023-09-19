@@ -61,10 +61,18 @@ classdef GrayscaleImageWrapper < wrappers.BaseImageWrapper
         function imageData = GetHistogramSpecificationImage(obj, target)
             arguments
                 obj wrappers.GrayscaleImageWrapper
-                target wrappers.GrayscaleImageWrapper
+                target wrappers.BaseImageWrapper
             end
             
-            imageData = histeq(obj.ImageData, target.ImageData);
+            if isa(target, 'wrappers.ColoredImageWrapper')
+                redChan = utils.Histogram.histmatch(obj.ImageData, target.ImageData(:, :, 1));
+                greenChan = utils.Histogram.histmatch(obj.ImageData, target.ImageData(:, :, 2));
+                blueChan = utils.Histogram.histmatch(obj.ImageData, target.ImageData(:, :, 3));
+
+                imageData = cat(3, redChan, greenChan, blueChan);
+            else
+                imageData = utils.Histogram.hismatch(obj.ImageData, target.ImageData);
+            end
         end
         
         % Get Image Brightening
