@@ -94,7 +94,11 @@ classdef GrayscaleImageWrapper < wrappers.BaseImageWrapper
                 c double;
             end
             
-            imageData = c * log(1 + double(obj.ImageData));
+            doubleImageData = im2double(obj.ImageData);
+            
+            doubleImageDataProcessed = c * log(1 + doubleImageData);
+            
+            imageData = im2uint8(doubleImageDataProcessed);
         end
         
         % Get Power Law Transformation
@@ -105,7 +109,11 @@ classdef GrayscaleImageWrapper < wrappers.BaseImageWrapper
                 gamma double;
             end
             
-            imageData = c * double(obj.ImageData) .^ gamma;
+            doubleImageData = im2double(obj.ImageData);
+            
+            doubleImageDataProcessed = c * doubleImageData .^ gamma;
+            
+            imageData = im2uint8(doubleImageDataProcessed);
         end
     end
 end

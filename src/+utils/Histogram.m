@@ -20,7 +20,7 @@ classdef Histogram
             end
         end
         
-        function newImage = histeq(imageData)
+        function newImageData = histeq(imageData)
             arguments
                 imageData uint8
             end %arguments
@@ -51,11 +51,11 @@ classdef Histogram
             end
             
             % Compute new image data
-            newImage = zeros(m, n, 'uint8');
+            newImageData = zeros(m, n, 'uint8');
             for i = 1:m
                 for j = 1:n
                     val = imageData(i, j);
-                    newImage(i, j) = uint8(255 * cumulativeProbabilities(val + 1));
+                    newImageData(i, j) = uint8(255 * cumulativeProbabilities(val + 1));
                 end
             end
         end
