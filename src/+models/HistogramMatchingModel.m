@@ -4,6 +4,7 @@ classdef HistogramMatchingModel < handle
     properties (SetAccess = private)
         % Application data.
         InputImageWrapper(1, 1) wrappers.BaseImageWrapper = wrappers.GrayscaleImageWrapper([]) % Empty image.
+        ReferenceImageWrapper(1, 1) wrappers.BaseImageWrapper = wrappers.GrayscaleImageWrapper([]) % Empty image.
         OutputImageWrapper(1, 1) wrappers.BaseImageWrapper = wrappers.GrayscaleImageWrapper([]) % Empty image.
     end % properties (SetAccess = private)
     
@@ -24,6 +25,19 @@ classdef HistogramMatchingModel < handle
             
             % Set the image wrapper.
             obj.InputImageWrapper = imageWrapper;
+            
+            % Broadcast the event.
+            obj.notify("DataChanged");
+        end % SetWrapper
+
+        function SetReferenceWrapper(obj, imageWrapper)
+            arguments
+                obj models.HistogramMatchingModel
+                imageWrapper wrappers.BaseImageWrapper
+            end
+            
+            % Set the image wrapper.
+            obj.ReferenceImageWrapper = imageWrapper;
             
             % Broadcast the event.
             obj.notify("DataChanged");
@@ -49,6 +63,7 @@ classdef HistogramMatchingModel < handle
             
             % Reset the image wrapper.
             obj.InputImageWrapper = wrappers.GrayscaleImageWrapper([]); % Empty image.
+            obj.ReferenceImageWrapper = wrappers.GrayscaleImageWrapper([]); % Empty image.
             obj.OutputImageWrapper = wrappers.GrayscaleImageWrapper([]); % Empty image.
             
             % Broadcast the event.

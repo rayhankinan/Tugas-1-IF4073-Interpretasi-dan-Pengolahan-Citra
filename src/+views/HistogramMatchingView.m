@@ -84,25 +84,25 @@ classdef HistogramMatchingView < components.HistogramMatchingComponent
             xlabel(referenceRedAxes, "Intensity");
             ylabel(referenceRedAxes, "Pixels");
             
-            obj.OutputBarChartRed = bar(NaN, "Parent", referenceRedAxes, "FaceColor", "r", "EdgeColor", "none");
+            obj.ReferenceBarChartRed = bar(NaN, "Parent", referenceRedAxes, "FaceColor", "r", "EdgeColor", "none");
             
             referenceGreenAxes = uiaxes("Parent", obj, "Position", [550 150 150 150]);
             title(referenceGreenAxes, "Green");
             xlabel(referenceGreenAxes, "Intensity");
             ylabel(referenceGreenAxes, "Pixels");
             
-            obj.OutputBarChartGreen = bar(NaN, "Parent", referenceGreenAxes, "FaceColor", "g", "EdgeColor", "none");
+            obj.ReferenceBarChartGreen = bar(NaN, "Parent", referenceGreenAxes, "FaceColor", "g", "EdgeColor", "none");
             
             referenceBlueAxes = uiaxes("Parent", obj, "Position", [400 0 150 150]);
             title(referenceBlueAxes, "Blue");
             xlabel(referenceBlueAxes, "Intensity");
             ylabel(referenceBlueAxes, "Pixels");
             
-            obj.OutputBarChartBlue = bar(NaN, "Parent", referenceBlueAxes, "FaceColor", "b", "EdgeColor", "none");
+            obj.ReferenceBarChartBlue = bar(NaN, "Parent", referenceBlueAxes, "FaceColor", "b", "EdgeColor", "none");
             
             % Create image output preview.
             referenceImageAxes = uiaxes("Parent", obj, "Position", [400 300 320 320], "Colormap", gray(256), "Visible", "off", "YDir", "reverse");
-            obj.OutputImage = imagesc("Parent", referenceImageAxes, "CData", NaN);
+            obj.ReferenceImage = imagesc("Parent", referenceImageAxes, "CData", NaN);
             
             % Create a bar chart for each color channel for output.
             outputRedAxes = uiaxes("Parent", obj, "Position", [800 150 150 150]);
@@ -143,7 +143,7 @@ classdef HistogramMatchingView < components.HistogramMatchingComponent
             %ONDATACHANGED Update the view in response to a change in the
             %model.
             
-            % Retrieve the most recent image wrapper.
+            % First, work on the input image
             wrapper = obj.Model.InputImageWrapper;
             
             % Update the bar chart data.
@@ -169,6 +169,34 @@ classdef HistogramMatchingView < components.HistogramMatchingComponent
                 
                 % Clear the image preview.
                 set(obj.InputImage, "CData", NaN);
+            end
+
+            % Then, work on the reference image
+            wrapper = obj.Model.ReferenceImageWrapper;
+            
+            % Update the bar chart data.
+            if ~wrapper.IsEmpty()
+                % Compute the histogram of each color channel.
+                [histRed, histGreen, histBlue] = wrapper.GetHistogram();
+                
+                % Update the bar chart data.
+                set(obj.ReferenceBarChartRed, "XData", 1:numel(histRed), "YData", histRed);
+                set(obj.ReferenceBarChartGreen, "XData", 1:numel(histGreen), "YData", histGreen);
+                set(obj.ReferenceBarChartBlue, "XData", 1:numel(histBlue), "YData", histBlue);
+                
+                % Get image data.
+                imageData = wrapper.GetImageData();
+                
+                % Update the image preview.
+                set(obj.ReferenceImage, "CData", imageData);
+            else
+                % Clear the bar chart data.
+                set(obj.ReferenceBarChartRed, "XData", NaN, "YData", NaN);
+                set(obj.ReferenceBarChartGreen, "XData", NaN, "YData", NaN);
+                set(obj.ReferenceBarChartBlue, "XData", NaN, "YData", NaN);
+                
+                % Clear the image preview.
+                set(obj.ReferenceImage, "CData", NaN);
             end
             
         end % onDataChanged

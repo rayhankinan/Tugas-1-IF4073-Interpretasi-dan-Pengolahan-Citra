@@ -29,10 +29,13 @@ classdef HistogramMatchingController < components.HistogramMatchingComponent
             %SETUP Initialize the controller.
             
             % Create a grid layout.
-            g = uigridlayout("Parent", obj, "RowHeight", "1x", "ColumnWidth", {"1x", "1x", "1x"}, "Padding", 0);
+            g = uigridlayout("Parent", obj, "RowHeight", "1x", "ColumnWidth", {"1x", "1x", "1x", "1x"}, "Padding", 0);
             
-            % Create upload button.
-            uibutton("Parent", g, "Text", "Upload new image", "ButtonPushedFcn", @obj.onUploadButtonPushed);
+            % Create upload button for input image.
+            uibutton("Parent", g, "Text", "Upload input image", "ButtonPushedFcn", @obj.onUploadInputButtonPushed);
+
+            % Create upload button for reference image.
+            uibutton("Parent", g, "Text", "Upload reference image", "ButtonPushedFcn", @obj.onUploadReferenceButtonPushed);
             
             % Create reset button.
             uibutton("Parent", g, "Text", "Reset", "ButtonPushedFcn", @obj.onResetButtonPushed);
@@ -49,7 +52,7 @@ classdef HistogramMatchingController < components.HistogramMatchingComponent
     end % methods (Access = protected)
     
     methods (Access = private)
-        function onUploadButtonPushed(obj, ~, ~)
+        function onUploadInputButtonPushed(obj, ~, ~)
             
             % Get the image file.
             [filename, pathname] = uigetfile("*.bmp", "Select an image");
@@ -71,6 +74,30 @@ classdef HistogramMatchingController < components.HistogramMatchingComponent
             
             % Update the model.
             obj.Model.SetInputWrapper(inputWrapper);
+        end % onButtonPushed
+
+        function onUploadReferenceButtonPushed(obj, ~, ~)
+            
+            % Get the image file.
+            [filename, pathname] = uigetfile("*.bmp", "Select an image");
+            
+            % If the user cancels, return.
+            if ~ischar(filename)
+                uialert(obj, "No image selected.", "Error", "Icon", "error");
+                return
+            end
+            
+            % Construct the full file path.
+            filepath = fullfile(pathname, filename);
+            
+            % Read the image.
+            imageData = imread(filepath);
+            
+            % Create an image wrapper object.
+            referenceWrapper = utils.ImageWrapperFactory.create(imageData);
+            
+            % Update the model.
+            obj.Model.SetReferenceWrapper(referenceWrapper);
         end % onButtonPushed
         
         function onResetButtonPushed(obj, ~, ~)
