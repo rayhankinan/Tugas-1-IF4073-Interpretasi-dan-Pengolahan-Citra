@@ -65,7 +65,7 @@ classdef HistogramView < components.HistogramComponent
             
             % Create image preview.
             imagesAxes = uiaxes("Parent", obj, "Position", [0 300 360 320], "Colormap", gray(256), "Visible", "off", "YDir", "reverse");
-            obj.Image = imagesc("Parent", imagesAxes, "CData", NaN);
+            obj.Image = image("Parent", imagesAxes, "CData", NaN);
             
         end % setup
         

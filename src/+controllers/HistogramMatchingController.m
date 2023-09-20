@@ -33,7 +33,7 @@ classdef HistogramMatchingController < components.HistogramMatchingComponent
             
             % Create upload button for input image.
             uibutton("Parent", g, "Text", "Upload input image", "ButtonPushedFcn", @obj.onUploadInputButtonPushed);
-
+            
             % Create upload button for reference image.
             uibutton("Parent", g, "Text", "Upload reference image", "ButtonPushedFcn", @obj.onUploadReferenceButtonPushed);
             
@@ -59,7 +59,6 @@ classdef HistogramMatchingController < components.HistogramMatchingComponent
             
             % If the user cancels, return.
             if ~ischar(filename)
-                uialert(obj, "No image selected.", "Error", "Icon", "error");
                 return
             end
             
@@ -75,7 +74,7 @@ classdef HistogramMatchingController < components.HistogramMatchingComponent
             % Update the model.
             obj.Model.SetInputWrapper(inputWrapper);
         end % onButtonPushed
-
+        
         function onUploadReferenceButtonPushed(obj, ~, ~)
             
             % Get the image file.
@@ -83,7 +82,6 @@ classdef HistogramMatchingController < components.HistogramMatchingComponent
             
             % If the user cancels, return.
             if ~ischar(filename)
-                uialert(obj, "No image selected.", "Error", "Icon", "error");
                 return
             end
             

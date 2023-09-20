@@ -76,8 +76,8 @@ classdef HistogramMatchingView < components.HistogramMatchingComponent
             
             % Create image input preview.
             inputImageAxes = uiaxes("Parent", obj, "Position", [0 300 320 320], "Colormap", gray(256), "Visible", "off", "YDir", "reverse");
-            obj.InputImage = imagesc("Parent", inputImageAxes, "CData", NaN);
-
+            obj.InputImage = image("Parent", inputImageAxes, "CData", NaN);
+            
             % Create a bar chart for each color channel for reference.
             referenceRedAxes = uiaxes("Parent", obj, "Position", [400 150 150 150]);
             title(referenceRedAxes, "Red");
@@ -102,7 +102,7 @@ classdef HistogramMatchingView < components.HistogramMatchingComponent
             
             % Create image output preview.
             referenceImageAxes = uiaxes("Parent", obj, "Position", [400 300 320 320], "Colormap", gray(256), "Visible", "off", "YDir", "reverse");
-            obj.ReferenceImage = imagesc("Parent", referenceImageAxes, "CData", NaN);
+            obj.ReferenceImage = image("Parent", referenceImageAxes, "CData", NaN);
             
             % Create a bar chart for each color channel for output.
             outputRedAxes = uiaxes("Parent", obj, "Position", [800 150 150 150]);
@@ -128,7 +128,7 @@ classdef HistogramMatchingView < components.HistogramMatchingComponent
             
             % Create image output preview.
             outputImageAxes = uiaxes("Parent", obj, "Position", [800 300 320 320], "Colormap", gray(256), "Visible", "off", "YDir", "reverse");
-            obj.OutputImage = imagesc("Parent", outputImageAxes, "CData", NaN);
+            obj.OutputImage = image("Parent", outputImageAxes, "CData", NaN);
         end % setup
         
         function update(~)
@@ -170,7 +170,7 @@ classdef HistogramMatchingView < components.HistogramMatchingComponent
                 % Clear the image preview.
                 set(obj.InputImage, "CData", NaN);
             end
-
+            
             % Then, work on the reference image
             wrapper = obj.Model.ReferenceImageWrapper;
             

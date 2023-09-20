@@ -72,7 +72,7 @@ classdef LogTransformationView < components.LogTransformationComponent
             
             % Create image input preview.
             inputImageAxes = uiaxes("Parent", obj, "Position", [0 300 360 320], "Colormap", gray(256), "Visible", "off", "YDir", "reverse");
-            obj.InputImage = imagesc("Parent", inputImageAxes, "CData", NaN);
+            obj.InputImage = image("Parent", inputImageAxes, "CData", NaN);
             
             % Create a bar chart for each color channel for output.
             outputRedAxes = uiaxes("Parent", obj, "Position", [600 150 250 150]);
@@ -98,7 +98,7 @@ classdef LogTransformationView < components.LogTransformationComponent
             
             % Create image output preview.
             outputImageAxes = uiaxes("Parent", obj, "Position", [600 300 360 320], "Colormap", gray(256), "Visible", "off", "YDir", "reverse");
-            obj.OutputImage = imagesc("Parent", outputImageAxes, "CData", NaN);
+            obj.OutputImage = image("Parent", outputImageAxes, "CData", NaN);
         end % setup
         
         function update(~)

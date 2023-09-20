@@ -74,7 +74,6 @@ classdef BrighteningController < components.BrighteningComponent
             
             % If the user cancels, return.
             if ~ischar(filename)
-                uialert(obj, "No image selected.", "Error", "Icon", "error");
                 return
             end
             
