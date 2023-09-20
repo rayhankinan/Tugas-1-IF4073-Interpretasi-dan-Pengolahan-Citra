@@ -63,7 +63,7 @@ classdef LogTransformationController < components.LogTransformationComponent
         function onUploadButtonPushed(obj, ~, ~)
             
             % Get the image file.
-            [filename, pathname] = uigetfile("*.bmp", "Select an image");
+            [filename, pathname] = uigetfile("*.bmp;*.tif", "Select an image");
             
             % If the user cancels, return.
             if ~ischar(filename)
