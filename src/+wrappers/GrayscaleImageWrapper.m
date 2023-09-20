@@ -71,7 +71,7 @@ classdef GrayscaleImageWrapper < wrappers.BaseImageWrapper
                 
                 imageData = cat(3, redChan, greenChan, blueChan);
             else
-                imageData = utils.Histogram.hismatch(obj.ImageData, target.ImageData);
+                imageData = utils.Histogram.histmatch(obj.ImageData, target.ImageData);
             end
         end
         
